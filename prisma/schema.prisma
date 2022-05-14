@@ -1,0 +1,64 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String?  @unique
+  image     String?
+  role      Role     @default(USER)
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Customer {
+  id       String    @id @default(uuid())
+  email    String?   @unique
+  phone    String?
+  name     String?
+  lastName String?
+  enabled  String?
+  projects Project[]
+}
+
+model Project {
+  id          String    @id @default(uuid())
+  name        String
+  location    String?
+  startDate   DateTime  @default(now())
+  endDate     DateTime?
+  description String?
+  adress      String?
+  customer     Customer?   @relation(fields: [id], references: [id])
+  tasks       Task[]
+  collaborators Collaborator[]
+
+}
+
+model Task {
+  id           String         @id @default(uuid())
+  name         String?
+  location     String?
+  project      Project?       @relation(fields: [id], references: [id])
+  collaborator Collaborator[]
+}
+
+model Collaborator {
+  id       String    @id @default(uuid())
+  name     String
+  lastName String?
+  projects Project[]
+  tasks     Task[]
+}

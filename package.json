@@ -1,0 +1,62 @@
+{
+  "name": "notus-nextjs",
+  "homepage": "https://demos.creative-tim.com/notus-nextjs",
+  "version": "1.1.0",
+  "description": "Notus NextJS - A free Tailwind CSS, NextJS and React Ui Kit and Admin by Creative Tim.",
+  "repository": "https://github.com/creativetimofficial/notus-nextjs",
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/client": "^3.6.2",
+    "@auth0/nextjs-auth0": "^1.8.0",
+    "@fortawesome/fontawesome-free": "5.15.3",
+    "@popperjs/core": "2.9.1",
+    "@prisma/client": "^3.13.0",
+    "@tailwindcss/forms": "0.2.1",
+    "apollo-server-micro": "^3.6.7",
+    "chart.js": "2.9.4",
+    "graphql": "^16.4.0",
+    "gulp": "4.0.2",
+    "gulp-append-prepend": "1.0.8",
+    "micro": "^9.3.4",
+    "micro-cors": "^0.1.1",
+    "next": "^12.1.5",
+    "nexus": "^1.3.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-scripts": "4.0.3",
+    "tailwindcss": "2.0.4"
+  },
+  "scripts": {
+    "start": "next start",
+    "build": "next build",
+    "dev": "next dev",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm run dev",
+    "build:tailwind": "tailwind build styles/index.css -o styles/tailwind.css",
+    "ts-node": "ts-node --compiler-options '{\\\"module\\\":\\\"commonjs\\\"}'"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "optionalDependencies": {},
+  "devDependencies": {
+    "@types/node": "^17.0.30",
+    "@types/react": "^18.0.8",
+    "autoprefixer": "10.2.5",
+    "postcss": "8.2.8",
+    "prisma": "^3.13.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  }
+}
