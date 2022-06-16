@@ -1,12 +1,10 @@
-// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 model User {
@@ -18,40 +16,38 @@ model User {
   role      Role     @default(USER)
 }
 
-enum Role {
-  USER
-  ADMIN
-}
-
 model Customer {
-  id       String    @id @default(uuid())
-  email    String?   @unique
+  id       String   @id @default(uuid())
+  email    String?  @unique
   phone    String?
   name     String?
   lastName String?
-  enabled  String?
-  projects Project[]
+  status   Status   @default(ACTIVE)
+  logo     String?
+  notes    String?
+  username String?
+  address String?
+  projects Project?
 }
 
 model Project {
-  id          String    @id @default(uuid())
-  name        String
-  location    String?
-  startDate   DateTime  @default(now())
-  endDate     DateTime?
-  description String?
-  adress      String?
-  customer     Customer?   @relation(fields: [id], references: [id])
-  tasks       Task[]
+  id            String         @id @default(uuid())
+  name          String
+  location      String?
+  startDate     DateTime       @default(now())
+  endDate       DateTime?
+  description   String?
+  address        String?
+  customer      Customer       @relation(fields: [id], references: [id])
+  tasks         Task?
   collaborators Collaborator[]
-
 }
 
 model Task {
   id           String         @id @default(uuid())
   name         String?
   location     String?
-  project      Project?       @relation(fields: [id], references: [id])
+  project      Project        @relation(fields: [id], references: [id])
   collaborator Collaborator[]
 }
 
@@ -60,5 +56,15 @@ model Collaborator {
   name     String
   lastName String?
   projects Project[]
-  tasks     Task[]
+  tasks    Task[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
 }

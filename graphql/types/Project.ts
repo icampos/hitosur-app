@@ -1,5 +1,5 @@
 // /graphql/types/User.ts
-import { extendType, objectType } from 'nexus'
+import { extendType, objectType, enumType } from 'nexus'
 import { Task } from './Task'
 import { Customer } from './Customer'
 
@@ -13,6 +13,7 @@ export const Project = objectType({
     t.string('endDate')
     t.string('description')
     t.string('address')
+    t.field("status", { type: ProjectStatus });
     t.field('customer', {
         type: Customer,
         async resolve(_parent, _args, ctx) {
@@ -28,7 +29,7 @@ export const Project = objectType({
       t.list.field('tasks', {
         type: Task,
         async resolve(_parent, _args, ctx) {
-          return await ctx.prisma.task
+          return await ctx.prisma.project
             .findUnique({
               where: {
                 id: _parent.id,
@@ -64,3 +65,8 @@ export const ProjectsQuery = extendType({
     })
   },
 })
+
+const ProjectStatus = enumType({
+  name: "ProjectStatus",
+  members: ["COMPLETED", "IN_PROGRESS", "CANCELED", "DELAYED"],
+});

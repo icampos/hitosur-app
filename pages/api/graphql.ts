@@ -1,31 +1,39 @@
-import { ApolloServer } from 'apollo-server-micro'
+import { ApolloServer } from 'apollo-server-micro';
+import { PageConfig } from 'next';
 import { schema } from '../../graphql/schema';
-import { resolvers } from '../../graphql/resolvers'
-import Cors from 'micro-cors'
 import { createContext } from '../../graphql/context';
 
+const apolloServer = new ApolloServer({
+  context: createContext,
+  schema,
+});
 
-const cors = Cors()
+const startServer = apolloServer.start();
 
-const apolloServer = new ApolloServer({ schema, resolvers,  context: createContext
-})
-
-const startServer = apolloServer.start()
-
-export default cors(async function handler(req, res) {
+export default async (req, res) => {
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    'https://studio.apollographql.com'
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
   if (req.method === 'OPTIONS') {
-    res.end()
-    return false
+    res.end();
+    return false;
   }
-  await startServer
+  await startServer;
 
   await apolloServer.createHandler({
     path: '/api/graphql',
-  })(req, res)
-})
+  })(req, res);
+};
 
-export const config = {
+// // Apollo Server Micro takes care of body parsing
+export const config: PageConfig = {
   api: {
     bodyParser: false,
   },
-}
+};

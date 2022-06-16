@@ -162,12 +162,12 @@ export default function Sidebar() {
               </li>
 
               <li className="items-center">
-                <Link href="/admin/maps">
+                <Link href="/clients">
                   <a
                     href="#pablo"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/admin/maps") !== -1
+                      (router.pathname.indexOf("/clients") !== -1
                         ? "text-lightBlue-500 hover:text-lightBlue-600"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
@@ -175,7 +175,7 @@ export default function Sidebar() {
                     <i
                       className={
                         "fas fa-handshake mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/maps") !== -1
+                        (router.pathname.indexOf("/clients") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
                       }
@@ -219,9 +219,9 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li className="items-center">
-                <Link href="/auth/register">
+                <Link href="/collaborators">
                   <a
-                    href="#pablo"
+                    href="#collaborators"
                     className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
                   >
                     <i className="fas fa-id-badge text-blueGray-300 mr-2 text-sm"></i>{" "}

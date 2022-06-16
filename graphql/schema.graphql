@@ -2,7 +2,7 @@
 ### Do not make changes to this file directly
 
 
-type Collaborators {
+type Collaborator {
   id: String
   lastName: String
   name: String
@@ -11,27 +11,43 @@ type Collaborators {
 }
 
 type Customer {
+  address: String
   email: String
-  enabled: String
   id: String
   lastName: String
+  logo: String
   name: String
+  notes: String
+  phone: String
   projects: [Project]
+  status: Status
+  userName: String
 }
 
 type Project {
   address: String
-  customer: [Customer]
+  collaborators: [Task]
+  customer: Customer
   description: String
   endDate: String
   id: String
   location: String
   name: String
   startDate: String
+  status: ProjectStatus
+  tasks: [Task]
+}
+
+enum ProjectStatus {
+  CANCELED
+  COMPLETED
+  DELAYED
+  IN_PROGRESS
 }
 
 type Query {
-  collaborators: [Collaborators]!
+  collaborator: [Collaborator]!
+  customer(id: String): Customer
   customers: [Customer]!
   projects: [Project]!
   tasks: [Task]!
@@ -43,12 +59,17 @@ enum Role {
   USER
 }
 
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
 type Task {
-  collaborator: [Collaborators]
+  collaborator: [Collaborator]
   id: String
   location: String
   name: String
-  project: [Project]
+  project: Project
 }
 
 type User {

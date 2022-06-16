@@ -40,10 +40,10 @@ export const Collaborator = objectType({
 export const CollaboratorsQuery = extendType({
   type: 'Query',
   definition(t) {
-    t.nonNull.list.field('collaborators', {
+    t.nonNull.list.field('collaborator', {
       type: 'Collaborator',
       resolve(_parent, _args, ctx) {
-        return ctx.prisma.customer.findMany()
+        return ctx.prisma.collaborator.findMany()
       },
     })
   },

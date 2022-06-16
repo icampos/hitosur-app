@@ -18,7 +18,6 @@ const UserDropdown = () => {
   };
 
   const {user} = useUser()
-  console.log(user)
   return (
     <>
       <a
