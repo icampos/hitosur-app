@@ -17,17 +17,17 @@ model User {
 }
 
 model Customer {
-  id       String   @id @default(uuid())
-  email    String?  @unique
+  id       String    @id @default(uuid())
+  email    String?   @unique
   phone    String?
   name     String?
   lastName String?
-  status   Status   @default(ACTIVE)
+  status   Status    @default(ACTIVE)
   logo     String?
   notes    String?
   username String?
-  address String?
-  projects Project?
+  address  String?
+  projects Project[]
 }
 
 model Project {
@@ -37,10 +37,12 @@ model Project {
   startDate     DateTime       @default(now())
   endDate       DateTime?
   description   String?
-  address        String?
-  customer      Customer       @relation(fields: [id], references: [id])
+  address       String?
+  customer      Customer?      @relation(fields: [id], references: [id])
   tasks         Task?
   collaborators Collaborator[]
+  type          ProjectType    @relation(fields: [typeId], references: [id])
+  typeId        String         @unique // relation scalar field (used in the `@relation` attribute above)
 }
 
 model Task {
@@ -51,10 +53,22 @@ model Task {
   collaborator Collaborator[]
 }
 
+model ProjectType {
+  id      String    @id @default(uuid())
+  name    String
+  Project Project[]
+}
+
+model TaskType {
+  id   String @id @default(uuid())
+  name String
+}
+
 model Collaborator {
   id       String    @id @default(uuid())
   name     String
   lastName String?
+  avatar   String?
   projects Project[]
   tasks    Task[]
 }

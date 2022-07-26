@@ -9,6 +9,7 @@ export const Collaborator = objectType({
     t.string('id')
     t.string('name')
     t.string('lastName')
+    t.string('avatar')
     t.list.field('projects', {
         type: Project,
         async resolve(_parent, _args, ctx) {

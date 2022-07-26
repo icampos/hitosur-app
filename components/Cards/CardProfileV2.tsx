@@ -55,7 +55,7 @@ export const CardProfile: React.FC<CardProfileProps> = ({
               </div>
             </div>
           </div>
-          <hr class="mt-6 border-b-1 border-blueGray-300" />
+          <hr className="mt-6 border-b-1 border-blueGray-300" />
           {projects?.map((project) => <ProjectCard />)}
           <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
             <div className="flex flex-wrap justify-center">

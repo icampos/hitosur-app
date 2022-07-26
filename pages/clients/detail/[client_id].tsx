@@ -51,7 +51,6 @@ export default function Details() {
   };
   const fullName = "Isaac Campos";
 
-  console.log(projects)
   return (
     <>
       <div className="flex flex-wrap">
@@ -72,7 +71,7 @@ export default function Details() {
           </CardSettings>
         </div>
         <div className="w-full lg:w-4/12 px-4">
-          <CardProfile projects={projects} />
+          <CardProfile projects={[projects]} />
         </div>
       </div>
     </>

@@ -8,14 +8,14 @@ interface Column {
   title: string;
 }
 
-interface CardTableProps {
+interface TableProps {
   color: string;
   columns: Column[];
   title: string;
   data: any;
 }
 
-export const CardTable: React.FC<CardTableProps> = ({ color, columns, title, data }) => {
+export const Table: React.FC<TableProps> = ({ color, columns, title, data }) => {
   return (
     <>
       <div

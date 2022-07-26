@@ -15,7 +15,7 @@ export const Customer = objectType({
     t.string("logo");
     t.string("address");
     t.field("status", { type: Status });
-    t.list.field("projects", {
+    t.field("projects", {
       type: Project,
       async resolve(_parent, _args, ctx) {
         return await ctx.prisma.customer
@@ -58,6 +58,20 @@ export const CustomerQuery = extendType({
     });
   },
 });
+
+
+export const CustomerQueryTest = extendType({
+  type: "Query",
+  definition(t) {
+    t.field("customer", {
+      type: "Customer",
+      args: { id: stringArg() },
+      //@ts-ignore
+      resolve: (_parent, args, ctx) => ctx.prisma.customer.findUnique({where: { id: args.id }}),
+    });
+  },
+});
+
 
 /*const Address = objectType({
   name: 'Address',

@@ -3,6 +3,7 @@
 
 
 type Collaborator {
+  avatar: String
   id: String
   lastName: String
   name: String
@@ -19,7 +20,7 @@ type Customer {
   name: String
   notes: String
   phone: String
-  projects: [Project]
+  projects: Project
   status: Status
   userName: String
 }
@@ -33,9 +34,10 @@ type Project {
   id: String
   location: String
   name: String
+  projectType: ProjectType
   startDate: String
   status: ProjectStatus
-  tasks: [Task]
+  typeId: String
 }
 
 enum ProjectStatus {
@@ -45,10 +47,17 @@ enum ProjectStatus {
   IN_PROGRESS
 }
 
+type ProjectType {
+  id: String
+  name: String
+}
+
 type Query {
   collaborator: [Collaborator]!
   customer(id: String): Customer
   customers: [Customer]!
+  projectType(id: String): ProjectType!
+  projectTypes: [ProjectType]!
   projects: [Project]!
   tasks: [Task]!
   users: [User]!

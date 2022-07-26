@@ -2,7 +2,7 @@ import React from "react";
 import { gql, useQuery } from "@apollo/client";
 
 // components
-import { CardTable } from "components/Cards/CardTableV2";
+//import {Table} from "components/Cards/Table";
 
 // layout for page
 import Admin from "layouts/Admin.js";
@@ -31,7 +31,7 @@ export default function Collaborators() {
     <>
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
-          <CardTable columns={columns} color="dark"  title="Colaboradores"  />
+          {/*<Table columns={columns} color="dark"  title="Colaboradores"  />*/}
         </div>
       </div>
     </>

@@ -15,7 +15,7 @@ export default function SubAdmin({ children }) {
         <AdminNavbar />
         <HeaderStats />
         {/* Header */}
-        <div className="px-4 md:px-10 mx-auto w-full -m-24 bg-blueGray-800">
+        <div className="px-4 md:px-10 mx-auto w-full -m-24 bg-blueGray-800" style={{'height': '100vh'}}>
           {children}
           <FooterAdmin />
         </div>

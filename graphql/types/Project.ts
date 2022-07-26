@@ -2,6 +2,7 @@
 import { extendType, objectType, enumType } from 'nexus'
 import { Task } from './Task'
 import { Customer } from './Customer'
+import { ProjectType } from './ProjectType'
 
 export const Project = objectType({
   name: 'Project',
@@ -13,7 +14,8 @@ export const Project = objectType({
     t.string('endDate')
     t.string('description')
     t.string('address')
-    t.field("status", { type: ProjectStatus });
+    t.string('typeId')
+    t.field("status", { type: ProjectStatus })
     t.field('customer', {
         type: Customer,
         async resolve(_parent, _args, ctx) {
@@ -23,19 +25,19 @@ export const Project = objectType({
                 id: _parent.id,
               },
             })
+            
             .customer()
         },
       })
-      t.list.field('tasks', {
-        type: Task,
+      t.field('projectType', {
+        type: ProjectType,
         async resolve(_parent, _args, ctx) {
-          return await ctx.prisma.project
+          return await ctx.prisma.projectType
             .findUnique({
               where: {
-                id: _parent.id,
+                id: _parent.typeId,
               },
             })
-            .tasks()
         },
       })
       t.list.field('collaborators', {
