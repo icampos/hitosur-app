@@ -1,78 +1,60 @@
 import React from "react";
-
+import { ProjectField } from "components/DataDisplay/ProjectField";
+import { TaskStatus } from "components/DataDisplay/TaskStatus";
+import { ProjectCollaborators } from "components/DataDisplay/ProjectCollaborators";
+import dayjs from "dayjs";
 
 interface ProjectSummaryProps {
-    color: string;
-    project?: any;
-    onClick?: any;
+  project?: any;
 }
 
+export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
+  const { customer, address, collaborators, documents } = project;
 
-export const ProjectDetails = ({color, project, onClick}: ProjectSummaryProps) => {
+  return (
+    <div>
+      <div className="pb-4">
+        <ProjectField
+          Icon={<i className="fas fa-calendar" />}
+          field={dayjs(project.startDate).format("ddd, DD MMMM")}
+        />
+        <ProjectField
+          Icon={<i className="fas fa-handshake" />}
+          field={customer.name}
+        />
+        <ProjectField
+          Icon={<i className="fas fa-location-dot" />}
+          field={address}
+        />
+        <ProjectField
+          Icon={<i className="fas fa-mobile" />}
+          field={customer.phone}
+        />
 
-    const { name } = project
+        <ProjectCollaborators
+          direction="flex-col"
+          collaborators={collaborators}
+        />
+      </div>
+      <hr />
+      <div className="text-base py-6">
+        <TaskStatus status="pending" title="Visita" />
+        <TaskStatus status="done" title="Dibujo" />
+        <TaskStatus status="done" title="Reporte" />
+        <TaskStatus status="done" title="Foto" />
+        <TaskStatus status="blocked" title="Correo" />
+      </div>
 
-    return (
-        <tr onClick={()=>onClick()}>
-        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-          <img
-            src="/img/bootstrap.jpg"
-            className="h-12 w-12 bg-white rounded-full border"
-            alt="..."
-          ></img>{" "}
-          <span
-            className={
-              "ml-3 font-bold " +
-              +(color === "light" ? "text-blueGray-600" : "text-white")
-            }
-          >
-            {name}
-          </span>
-        </th>
-        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-          $2,500 USD
-        </td>
-        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-          <i className="fas fa-circle text-orange-500 mr-2"></i> pending
-        </td>
-        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-          <div className="flex">
-            <img
-              src="/img/team-1-800x800.jpg"
-              alt="..."
-              className="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow"
-            ></img>
-            <img
-              src="/img/team-2-800x800.jpg"
-              alt="..."
-              className="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow -ml-4"
-            ></img>
-            <img
-              src="/img/team-3-800x800.jpg"
-              alt="..."
-              className="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow -ml-4"
-            ></img>
-            <img
-              src="/img/team-4-470x470.png"
-              alt="..."
-              className="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow -ml-4"
-            ></img>
-          </div>
-        </td>
-        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-          <div className="flex items-center">
-            <span className="mr-2">60%</span>
-            <div className="relative w-full">
-              <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                <div
-                  style={{ width: "60%" }}
-                  className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                ></div>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-    )
-
-}
+      <hr />
+      <div className="text-base py-6">
+        {documents.map((document) => (
+          <ProjectField
+            Icon={<i className="fas fa-file-image" />}
+            field={document.number}
+            link={document.link}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};

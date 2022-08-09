@@ -1,7 +1,8 @@
 // prisma/seed.ts
 
 import { PrismaClient } from '@prisma/client'
-import { data } from '../data/links'
+import { projectTypes } from './data/projectType'
+
 const prisma = new PrismaClient()
 
 async function main() {
@@ -12,8 +13,8 @@ async function main() {
     },
   })
 
-  await prisma.link.createMany({
-    data: data,
+  await prisma.projectType.createMany({
+    data: projectTypes,
   })
 }
 

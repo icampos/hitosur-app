@@ -1,0 +1,22 @@
+.ant-drawer-header-title {
+  flex-direction: row-reverse;
+}
+
+.status:hover .fa-edit {
+  display: block;
+}
+
+.project-summary {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr repeat(3, 0);
+  grid-column-gap: 0px;
+  grid-row-gap: 10px;
+  justify-content: center;
+  align-content: center;
+}
+
+.project-summary > div {
+  display: flex;
+  align-items: center;
+}

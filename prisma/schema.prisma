@@ -39,43 +39,71 @@ model Project {
   description   String?
   address       String?
   customer      Customer?      @relation(fields: [id], references: [id])
-  tasks         Task?
   collaborators Collaborator[]
-  type          ProjectType    @relation(fields: [typeId], references: [id])
-  typeId        String         @unique // relation scalar field (used in the `@relation` attribute above)
+  type          ProjectType?    @relation(fields: [typeId], references: [id])
+  typeId        String         
+  notes         String?
+  documents     Document[]
 }
 
 model Task {
-  id           String         @id @default(uuid())
-  name         String?
-  location     String?
-  project      Project        @relation(fields: [id], references: [id])
-  collaborator Collaborator[]
+  id             String        @id @default(uuid())
+  name           String?
+  type           TaskType      @relation(fields: [typeId], references: [id])
+  typeId         String        @unique
 }
 
 model ProjectType {
   id      String    @id @default(uuid())
-  name    String
+  type    ProjectTypeEnum
   Project Project[]
 }
 
 model TaskType {
   id   String @id @default(uuid())
   name String
+  Task Task[]
+}
+
+model CollaboratorType {
+  id           String         @id @default(uuid())
+  type         CollaboratorTypeEnum
+  Collaborator Collaborator[]
 }
 
 model Collaborator {
-  id       String    @id @default(uuid())
+  id       String           @id @default(uuid())
   name     String
   lastName String?
   avatar   String?
   projects Project[]
-  tasks    Task[]
+  type     CollaboratorType @relation(fields: [typeId], references: [id])
+  typeId   String           
+}
+
+model Document {
+  id       String  @id @default(uuid())
+  number    String
+  link      String
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String
+
 }
 
 enum Role {
   USER
   ADMIN
+}
+
+ enum CollaboratorTypeEnum {
+  RESPONSIBLE
+  ASSISTANT
+  ON_FIELD
+}
+
+enum ProjectTypeEnum {
+  REPORTES_CURVAS
+  PLANO_CATASTRO
 }
 
 enum Status {

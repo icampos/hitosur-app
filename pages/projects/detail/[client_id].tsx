@@ -29,9 +29,7 @@ export default function Details() {
   const { data, loading, error } = useQuery(ClientsQuery, {
     variables: {id: client_id}
   });
-
-  console.log(data)
-
+ 
   const [isDisabled, setIsDisabled] = useState(true);
 
   const { name, lastName, email, phone, status, notes, address } = data?.customer || {};

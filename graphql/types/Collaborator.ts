@@ -1,7 +1,7 @@
 // /graphql/types/User.ts
 import { extendType, objectType } from 'nexus'
 import { Project } from './Project'
-import { Task } from './Task'
+import { CollaboratorType } from './CollaboratorType'
 
 export const Collaborator = objectType({
   name: 'Collaborator',
@@ -10,28 +10,28 @@ export const Collaborator = objectType({
     t.string('name')
     t.string('lastName')
     t.string('avatar')
+    t.string('typeId')
     t.list.field('projects', {
         type: Project,
         async resolve(_parent, _args, ctx) {
           return await ctx.prisma.collaborator
-            .findUnique({
+            .findMany({
               where: {
                 id: _parent.id,
               },
             })
-            .projects()
         },
       })
-      t.list.field('tasks', {
-        type: Task,
+      t.field('collaboratorType', {
+        type: CollaboratorType,
+        /*@ts-ignore*/
         async resolve(_parent, _args, ctx) {
-          return await ctx.prisma.collaborator
-            .findUnique({
+          return await ctx.prisma.collaboratorType
+            .findFirst({
               where: {
-                id: _parent.id,
+                id: _parent.typeId,
               },
             })
-            .tasks()
         },
       })
       

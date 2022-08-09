@@ -15,18 +15,6 @@ export const Customer = objectType({
     t.string("logo");
     t.string("address");
     t.field("status", { type: Status });
-    t.field("projects", {
-      type: Project,
-      async resolve(_parent, _args, ctx) {
-        return await ctx.prisma.customer
-          .findUnique({
-            where: {
-              id: _parent.id,
-            },
-          })
-          .projects();
-      },
-    });
   },
 });
 

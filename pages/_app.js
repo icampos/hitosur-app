@@ -11,9 +11,10 @@ import PageChange from "components/PageChange/PageChange.js";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "styles/tailwind.css";
-import "styles/custom.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import 'antd/dist/antd.css';
+import "styles/custom.css";
+
 
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);

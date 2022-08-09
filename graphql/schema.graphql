@@ -4,11 +4,17 @@
 
 type Collaborator {
   avatar: String
+  collaboratorType: CollaboratorType
   id: String
   lastName: String
   name: String
   projects: [Project]
-  tasks: [Task]
+  typeId: String
+}
+
+type CollaboratorType {
+  id: String
+  type: String
 }
 
 type Customer {
@@ -20,22 +26,36 @@ type Customer {
   name: String
   notes: String
   phone: String
-  projects: Project
   status: Status
   userName: String
 }
 
+"""
+A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
+type Document {
+  id: String
+  link: String
+  number: String
+  project: Project
+  projectId: String
+}
+
 type Project {
   address: String
-  collaborators: [Task]
+  collaborators: [Collaborator]
   customer: Customer
   description: String
-  endDate: String
+  documents: [Document]
+  endDate: Date
   id: String
   location: String
   name: String
+  notes: String
   projectType: ProjectType
-  startDate: String
+  startDate: Date
   status: ProjectStatus
   typeId: String
 }
@@ -49,13 +69,18 @@ enum ProjectStatus {
 
 type ProjectType {
   id: String
-  name: String
+  type: String
 }
 
 type Query {
   collaborator: [Collaborator]!
+  collaboratorType: CollaboratorType!
+  currentWeekProjects: [Project]
   customer(id: String): Customer
   customers: [Customer]!
+  document(id: String): Document!
+  documents: [Document]!
+  project(id: String): Project
   projectType(id: String): ProjectType!
   projectTypes: [ProjectType]!
   projects: [Project]!

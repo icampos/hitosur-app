@@ -21,10 +21,11 @@ export const typeDefs = gql`
 import { makeSchema } from 'nexus'
 import { join } from 'path'
 import * as types from './types'
+import { GQLDate } from './scalars'
 
 
 export const schema = makeSchema({
-  types,
+  types: [types, GQLDate],
   outputs: {
     typegen: join(process.cwd(), 'node_modules', '@types', 'nexus-typegen', 'index.d.ts'),
     schema: join(process.cwd(), 'graphql', 'schema.graphql'),

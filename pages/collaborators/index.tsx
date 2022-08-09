@@ -23,8 +23,6 @@ export default function Collaborators() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
 
-  console.log(loading, data);
-
   const columns = [{title: "Name"} , { title: "Last Name" }];
 
   return (

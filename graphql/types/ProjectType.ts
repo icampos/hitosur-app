@@ -4,7 +4,7 @@ export const ProjectType = objectType({
     name: "ProjectType",
     definition(t) {
         t.string("id");
-        t.string("name");
+        t.string("type");
     },
 });
 

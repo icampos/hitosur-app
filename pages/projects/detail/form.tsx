@@ -106,6 +106,7 @@ export const ClientForm: React.FC<ClientFormProps> = ({
                 <input
                   type="text"
                   className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  defaultValue={client.phone}
                   disabled={isDisabled}
                 />
               </div>
@@ -121,6 +122,7 @@ export const ClientForm: React.FC<ClientFormProps> = ({
                 <input
                   type="text"
                   className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  defaultValue={client.phone}
                   disabled={isDisabled}
                 />
               </div>
@@ -136,6 +138,7 @@ export const ClientForm: React.FC<ClientFormProps> = ({
                 <input
                   type="text"
                   className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  defaultValue={client.address}
                   disabled={isDisabled}
                 />
               </div>
@@ -198,6 +201,13 @@ export const ClientForm: React.FC<ClientFormProps> = ({
           <div className="flex flex-wrap">
             <div className="w-full lg:w-12/12 px-4">
               <div className="relative w-full mb-3">
+                <textarea
+                  type="text"
+                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  rows={"4"}
+                  defaultValue="A beautiful UI Kit and Admin for NextJS & Tailwind CSS. It is Free
+                    and Open Source."
+                ></textarea>
               </div>
             </div>
           </div>

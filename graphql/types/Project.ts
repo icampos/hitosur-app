@@ -1,8 +1,11 @@
 // /graphql/types/User.ts
-import { extendType, objectType, enumType } from 'nexus'
-import { Task } from './Task'
+import { extendType, objectType, enumType, stringArg } from 'nexus'
+import { Collaborator } from './Collaborator'
+import { Document } from './Document'
 import { Customer } from './Customer'
 import { ProjectType } from './ProjectType'
+
+import { currentWeek } from 'utils/calendar'
 
 export const Project = objectType({
   name: 'Project',
@@ -10,48 +13,60 @@ export const Project = objectType({
     t.string('id')
     t.string('name')
     t.string('location')
-    t.string('startDate')
-    t.string('endDate')
+    t.date('startDate')
+    t.date('endDate')
     t.string('description')
     t.string('address')
     t.string('typeId')
+    t.string('notes')
     t.field("status", { type: ProjectStatus })
     t.field('customer', {
-        type: Customer,
-        async resolve(_parent, _args, ctx) {
-          return await ctx.prisma.project
-            .findUnique({
-              where: {
-                id: _parent.id,
-              },
-            })
-            
-            .customer()
-        },
-      })
-      t.field('projectType', {
-        type: ProjectType,
-        async resolve(_parent, _args, ctx) {
-          return await ctx.prisma.projectType
-            .findUnique({
-              where: {
-                id: _parent.typeId,
-              },
-            })
-        },
-      })
-      t.list.field('collaborators', {
-        type: Task,
-        async resolve(_parent, _args, ctx) {
-          return await ctx.prisma.project
-            .findUnique({
-              where: {
-                id: _parent.id,
-              },
-            })
-            .collaborators()
-        },
-      })
+      type: Customer,
+      async resolve(_parent, _args, ctx) {
+        return await ctx.prisma.project
+          .findUnique({
+            where: {
+              id: _parent.id,
+            },
+          })
+          .customer()
+      },
+    })
+    t.field('projectType', {
+      type: ProjectType,
+      async resolve(_parent, _args, ctx) {
+        return await ctx.prisma.projectType
+          .findUnique({
+            where: {
+              id: _parent.typeId,
+            },
+          })
+      },
+    })
+    t.list.field('collaborators', {
+      type: Collaborator,
+      async resolve(_parent, _args, ctx) {
+        return await ctx.prisma.project
+          .findUnique({
+            where: {
+              id: _parent.id,
+            },
+          })
+          .collaborators()
+      },
+    })
+    t.list.field('documents', {
+      type: Document,
+      async resolve(_parent, _args, ctx) {
+        return await ctx.prisma.project
+          .findUnique({
+            where: {
+              id: _parent.id,
+            },
+          })
+          .documents()
+      },
+    })
   },
 })
 
@@ -67,6 +82,40 @@ export const ProjectsQuery = extendType({
     })
   },
 })
+
+export const ProjectQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.field("project", {
+      type: "Project",
+      args: { id: stringArg() },
+      //@ts-ignore
+      resolve: (_parent, args, ctx) => ctx.prisma.project.findUnique({ where: { id: args.id } }),
+    });
+  },
+});
+
+
+export const currentWeekProjectsQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.list.field("currentWeekProjects", {
+      type: "Project",
+      //@ts-ignore
+      resolve: (_parent, _args, ctx) => {
+        return ctx.prisma.project.findMany({
+          where: {
+            startDate: {
+              lte: currentWeek.lastDay,
+              gte: currentWeek.firstDay,
+            }
+          }
+        })
+      }
+    });
+  },
+});
+
 
 const ProjectStatus = enumType({
   name: "ProjectStatus",

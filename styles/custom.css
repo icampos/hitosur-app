@@ -1,3 +1,5 @@
+@import "./antd/Drawer.module.css";
+
 .table {
     --bs-table-bg: transparent;
     --bs-table-accent-bg: transparent;
