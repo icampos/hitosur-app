@@ -1,4 +1,5 @@
 @import "./antd/Drawer.module.css";
+@import "./antd/Table.module.css";
 
 .table {
     --bs-table-bg: transparent;

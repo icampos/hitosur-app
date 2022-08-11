@@ -2,7 +2,7 @@ import React from "react";
 
 interface TaskStatusProps {
   status: string;
-  title: string;
+  title?: string;
 }
 
 export const TaskStatus: React.FC<TaskStatusProps> = ({ status, title }) => {
@@ -18,7 +18,7 @@ export const TaskStatus: React.FC<TaskStatusProps> = ({ status, title }) => {
     done: "fas fa-check-circle",
     blocked: "fas fa-minus-circle",
     default: "fas fa-clock",
-  }
+  };
 
   const statusColor = statusColors[status];
   const statusIcon = statusIcons[status];
@@ -26,11 +26,10 @@ export const TaskStatus: React.FC<TaskStatusProps> = ({ status, title }) => {
   return (
     <div className="status cursor-pointer flex justify-between align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-base mb-4">
       <div>
-      <i className={`mr-2 ${statusColor} ${statusIcon}` }></i> <span className="ml-3">{title}</span>
+        <i className={`mr-2 ${statusColor} ${statusIcon}`}></i>{" "}
+        <span className="capitalize ml-3">{title ? title : status}</span>
       </div>
-      <div>
-      <i className="fas fa-edit hidden" />
-      </div>
+      <div>{title && <i className="fas fa-edit hidden" />}</div>
     </div>
   );
 };

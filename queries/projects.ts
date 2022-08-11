@@ -17,6 +17,7 @@ export const AllProjectsQuery = gql`
         }
         collaborators {
          name
+         lastName
          collaboratorType{
           type
          }

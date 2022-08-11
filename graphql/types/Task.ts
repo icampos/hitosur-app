@@ -18,6 +18,7 @@ export const Task = objectType({
                 id: _parent.id,
               },
             })
+            //@ts-ignore
             .project()
         },
       })
@@ -30,6 +31,7 @@ export const Task = objectType({
                 id: _parent.id,
               },
             })
+            //@ts-ignore
             .collaborator()
         },
       })

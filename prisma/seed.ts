@@ -14,6 +14,7 @@ async function main() {
   })
 
   await prisma.projectType.createMany({
+    //@ts-ignore
     data: projectTypes,
   })
 }
