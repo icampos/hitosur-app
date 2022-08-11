@@ -5,7 +5,7 @@ import { gql, useQuery } from "@apollo/client";
 // components
 import { CardSettings } from "components/Forms/CardSettings";
 import CardProfile from "components/Cards/CardProfile.js";
-import { ClientForm } from "./form";
+import { ClientForm } from "../../../components/Forms/projectForm";
 // layout for page
 import SubAdmin from "layouts/SubAdmin.js";
 
