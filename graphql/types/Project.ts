@@ -10,10 +10,13 @@ import { currentWeek } from 'utils/calendar'
 export const Project = objectType({
   name: 'Project',
   definition(t) {
+    console.log(t)
     t.string('id')
     t.string('name')
     t.string('location')
+    //@ts-ignore
     t.date('startDate')
+    //@ts-ignore
     t.date('endDate')
     t.string('description')
     t.string('address')
