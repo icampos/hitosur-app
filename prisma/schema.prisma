@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["dataProxy"]
 }
 
 datasource db {
@@ -14,6 +15,7 @@ model User {
   email     String?  @unique
   image     String?
   role      Role     @default(USER)
+  collaborator Collaborator? 
 }
 
 model Customer {
@@ -42,8 +44,9 @@ model Project {
   collaborators Collaborator[]
   type          ProjectType?    @relation(fields: [typeId], references: [id])
   typeId        String         
-  notes         String?
   documents     Document[]
+  notes         Note[]
+
 }
 
 model Task {
@@ -78,7 +81,10 @@ model Collaborator {
   avatar   String?
   projects Project[]
   type     CollaboratorType @relation(fields: [typeId], references: [id])
-  typeId   String           
+  typeId   String    
+  user      User @relation(fields: [userId], references: [id])
+  userId    String  @unique // relation scalar field (used in the `@relation` attribute above)
+
 }
 
 model Document {
@@ -87,7 +93,14 @@ model Document {
   link      String
   project   Project @relation(fields: [projectId], references: [id])
   projectId String
+}
 
+model Note {
+  id       String  @id @default(uuid())
+  date    String
+  note      String
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String
 }
 
 enum Role {

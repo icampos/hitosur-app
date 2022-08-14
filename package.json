@@ -36,7 +36,9 @@
     "dev": "next dev",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm run dev",
     "build:tailwind": "tailwind build styles/index.css -o styles/tailwind.css",
-    "ts-node": "ts-node --compiler-options '{\\\"module\\\":\\\"commonjs\\\"}'"
+    "ts-node": "ts-node --compiler-options '{\\\"module\\\":\\\"commonjs\\\"}'",
+    "vercel-build": "prisma:generate && next build",
+    "prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE=\"dataproxy\" prisma generate"
   },
   "eslintConfig": {
     "extends": "react-app"
