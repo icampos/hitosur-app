@@ -35,8 +35,6 @@ export default function Details() {
     variables: {id: client_id}
   });
 
-  console.log(data)
-
   const [isDisabled, setIsDisabled] = useState(true);
 
   const { name, lastName, email, phone, status, notes, address, projects } = data?.customer || {};

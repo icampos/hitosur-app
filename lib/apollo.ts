@@ -1,8 +1,8 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client'
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { relayStylePagination } from '@apollo/client/utilities';
 
 const apolloClient = new ApolloClient({
-  uri: '/api/graphql',
+  uri: 'http://localhost:3000/api/graphql',
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
@@ -12,6 +12,6 @@ const apolloClient = new ApolloClient({
       },
     },
   }),
-})
+});
 
-export default apolloClient
+export default apolloClient;

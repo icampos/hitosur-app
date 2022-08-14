@@ -103,7 +103,7 @@ export default function Dashboard() {
   };
 
   const onChange = (key) => {
-    console.log(key);
+    return false
   };
 
   const monthCellRender = (value: Moment) => {

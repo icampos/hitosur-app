@@ -25,9 +25,6 @@ export const WeeklyAgenda = ({ projects, onProjectClick }: WeeklyAgendaProps) =>
     }
   }, [projects]);
 
-  console.log(weeklyProjects)
-
-
   return (
     <>
       {Object.keys(weeklyProjects).map((day) => {
