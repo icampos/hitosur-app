@@ -46,14 +46,17 @@ model Project {
   typeId        String         
   documents     Document[]
   notes         Note[]
+  tasks         Task[] 
 
 }
 
 model Task {
   id             String        @id @default(uuid())
-  name           String?
+  status          String
   type           TaskType      @relation(fields: [typeId], references: [id])
   typeId         String        @unique
+  project         Project @relation(fields: [projectId], references: [id])
+  projectId       String
 }
 
 model ProjectType {
@@ -82,8 +85,8 @@ model Collaborator {
   projects Project[]
   type     CollaboratorType @relation(fields: [typeId], references: [id])
   typeId   String    
-  user      User @relation(fields: [userId], references: [id])
-  userId    String  @unique // relation scalar field (used in the `@relation` attribute above)
+  user      User? @relation(fields: [userId], references: [id])
+  userId    String?  @unique // relation scalar field (used in the `@relation` attribute above)
 
 }
 

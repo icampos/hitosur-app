@@ -84,6 +84,8 @@ type Query {
   projectType(id: String): ProjectType!
   projectTypes: [ProjectType]!
   projects: [Project]!
+  taskType(id: String): TaskType!
+  taskTypes: [TaskType]!
   tasks: [Task]!
   users: [User]!
 }
@@ -101,9 +103,15 @@ enum Status {
 type Task {
   collaborator: [Collaborator]
   id: String
-  location: String
-  name: String
   project: Project
+  status: String
+  taskType: TaskType
+  typeId: String
+}
+
+type TaskType {
+  id: String
+  name: String
 }
 
 type User {

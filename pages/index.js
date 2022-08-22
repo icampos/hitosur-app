@@ -3,17 +3,20 @@ import { getSession } from "@auth0/nextjs-auth0";
 import { useQuery } from "@apollo/client";
 import dayjs from "dayjs";
 // Antd Components
-import { Drawer, Tabs, Empty } from "antd";
+import { Button, Drawer, Tabs, Empty } from "antd";
 import { WeeklyAgenda } from "components/Calendar/WeeklyAgenda";
 // Library Components
 import CardLineChart from "components/Cards/CardLineChart.js";
 import CardBarChart from "components/Cards/CardBarChart.js";
 import CardPageVisits from "components/Cards/CardPageVisits.js";
 import CardSocialTraffic from "components/Cards/CardSocialTraffic.js";
+
 import { CardContainer } from "components/Cards/CardContainer";
 import { ProjectSummary } from "components/DataDisplay/ProjectSummary";
 import { ProjectDetails } from "components/DataDisplay/ProjectDetails";
 import { ProjectTitle } from "components/DataDisplay/ProjectTitle";
+
+import {ProjectForm} from "components/Forms/ProjectForm";
 
 // Layout for page
 import SubAdmin from "layouts/SubAdmin.js";
@@ -22,12 +25,13 @@ import { CurrentWeekProjectsQuery } from "queries/projects";
 
 export default function Dashboard() {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+  const [isAddDrawerVisible, setIsAddDrawerVisible] = useState(false);
+
   const [selectedProject, setSelectedProject] = useState(null);
-  const [dailyAgenda, setDailyAgenda] = useState(null)
+  const [dailyAgenda, setDailyAgenda] = useState(null);
   const { data, loading, error } = useQuery(CurrentWeekProjectsQuery);
 
   const projects = data?.currentWeekProjects;
-
 
   const onProjectClick = (project) => {
     setSelectedProject(project);
@@ -40,14 +44,14 @@ export default function Dashboard() {
     console.log(key);
   };
 
-  useEffect(()=>{
-    if(data && projects.length){
-      const dailyProjects = projects.filter((project)=>{
-        return project.startDate === dayjs().format("YYYY-MM-DD")
-      })
-      setDailyAgenda(dailyProjects)
+  useEffect(() => {
+    if (data && projects.length) {
+      const dailyProjects = projects.filter((project) => {
+        return project.startDate === dayjs().format("YYYY-MM-DD");
+      });
+      setDailyAgenda(dailyProjects);
     }
-  },[data, projects])
+  }, [data, projects]);
 
   return (
     <>
@@ -76,9 +80,12 @@ export default function Dashboard() {
                         />
                       </>
                     ))}
-                    {(!dailyAgenda || dailyAgenda.length <= 0 ) && (
-                      <Empty className="p-8" description="No events happening today"/>
-                    )}
+                  {(!dailyAgenda || dailyAgenda.length <= 0) && (
+                    <Empty
+                      className="p-8"
+                      description="No events happening today"
+                    />
+                  )}
                 </TabPane>
                 <TabPane
                   tab={
@@ -88,7 +95,21 @@ export default function Dashboard() {
                   }
                   key="2"
                 >
-                  {(!loading && projects) && <WeeklyAgenda projects={projects} onProjectClick={onProjectClick}/>}
+                  {!loading && projects && (
+                    <WeeklyAgenda
+                      projects={projects}
+                      onProjectClick={onProjectClick}
+                    />
+                  )}
+                  {(!projects || projects.length <= 0) && (
+                    <Empty
+                      className="p-8"
+                      description="No events happening this week"
+                    
+                    >
+                       <Button onClick={()=>setIsAddDrawerVisible(true)} type="primary">Create Event</Button>
+                      </Empty>
+                  )}
                 </TabPane>
               </Tabs>
             </div>
@@ -126,6 +147,18 @@ export default function Dashboard() {
           key={"placement"}
         >
           <ProjectDetails project={selectedProject} />
+        </Drawer>
+      )}
+      {isAddDrawerVisible && (
+        <Drawer
+          title='Create Event'
+          placement="right"
+          closable={true}
+          onClose={() => setIsAddDrawerVisible(false)}
+          visible={isAddDrawerVisible}
+          key={"placement"}
+        >
+          <ProjectForm />
         </Drawer>
       )}
     </>

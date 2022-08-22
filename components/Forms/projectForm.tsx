@@ -1,90 +1,58 @@
 import React from "react";
+import { Form, Input } from "antd";
 
 interface ClientFormProps {
-  subtititle: string;
-  client: {
-    email: string;
-    firstName: string;
-    lastName: string;
-  };
-  isDisabled: boolean;
+  subtititle?: string;
 }
 
-export const ClientForm: React.FC<ClientFormProps> = ({
-  subtititle,
-  client,
-  isDisabled,
-}) => {
+export const ProjectForm: React.FC<ClientFormProps> = ({ subtititle }) => {
   return (
     <>
-      <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-        <form>
-          <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      <div className="flex-auto pt-0">
+        <form className="project-form">
+          <h5 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
             Client Information
-          </h6>
+          </h5>
           <div className="flex flex-wrap">
-          <div className="w-full lg:w-6/12 px-4">
+            <div className="w-full">
               <div className="relative w-full mb-3">
-                <label
-                  className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
+                <Form.Item
+                  label="Name"
+                  name="name"
+                  rules={[
+                    { required: true, message: "Please input project's name" },
+                  ]}
                 >
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue={client.firstName}
-                  disabled={isDisabled}
-                />
+                  <Input className="block border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none w-full ease-linear transition-all duration-150" />
+                </Form.Item>
+              </div>
+              <div className="relative w-full mb-3">
+                <Form.Item
+                  label="Address"
+                  name="address"
+                >
+                  <Input className="block border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none w-full ease-linear transition-all duration-150" />
+                </Form.Item>
+              </div>
+            </div>
+            <div className="w-full">
+              <div className="relative w-full mb-3">
+              <Form.Item
+                  label="Date"
+                  name="startDate"
+                >
+                  <Input className="block border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none w-full ease-linear transition-all duration-150" />
+                </Form.Item>
+              </div>
+            </div>
+            <div className="w-full">
+              <div className="relative w-full mb-3">
+
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">
               <div className="relative w-full mb-3">
-                <label
-                  className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue={client.lastName}
-                  disabled={isDisabled}
-                />
-              </div>
-            </div>
-            <div className="w-full lg:w-6/12 px-4">
-              <div className="relative w-full mb-3">
-                <label
-                  className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Username
-                </label>
-                <input
-                  type="text"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue="isaac.campos"
-                  disabled={isDisabled}
-                />
-              </div>
-            </div>
-            <div className="w-full lg:w-6/12 px-4">
-              <div className="relative w-full mb-3">
-                <label
-                  className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue={client.email}
-                  disabled={isDisabled}
-                />
+
               </div>
             </div>
           </div>
@@ -95,7 +63,7 @@ export const ClientForm: React.FC<ClientFormProps> = ({
             Contact Information
           </h6>
           <div className="flex flex-wrap">
-          <div className="w-full lg:w-6/12 px-4">
+            <div className="w-full lg:w-6/12 px-4">
               <div className="relative w-full mb-3">
                 <label
                   className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -105,10 +73,7 @@ export const ClientForm: React.FC<ClientFormProps> = ({
                 </label>
                 <input
                   type="text"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  //@ts-ignore
-                  defaultValue={client.phone}
-                  disabled={isDisabled}
+                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150"
                 />
               </div>
             </div>
@@ -122,11 +87,8 @@ export const ClientForm: React.FC<ClientFormProps> = ({
                 </label>
                 <input
                   type="text"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    //@ts-ignore
-
-                  defaultValue={client.phone}
-                  disabled={isDisabled}
+                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150"
+                  //@ts-ignore
                 />
               </div>
             </div>
@@ -140,11 +102,7 @@ export const ClientForm: React.FC<ClientFormProps> = ({
                 </label>
                 <input
                   type="text"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    //@ts-ignore
-
-                  defaultValue={client.address}
-                  disabled={isDisabled}
+                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150"
                 />
               </div>
             </div>
@@ -158,9 +116,8 @@ export const ClientForm: React.FC<ClientFormProps> = ({
                 </label>
                 <input
                   type="email"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150"
                   defaultValue="Alajuela"
-                  disabled={isDisabled}
                 />
               </div>
             </div>
@@ -174,9 +131,8 @@ export const ClientForm: React.FC<ClientFormProps> = ({
                 </label>
                 <input
                   type="text"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150"
                   defaultValue="Costa Rica"
-                  disabled={isDisabled}
                 />
               </div>
             </div>
@@ -190,9 +146,8 @@ export const ClientForm: React.FC<ClientFormProps> = ({
                 </label>
                 <input
                   type="text"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150"
                   defaultValue="23001"
-                  disabled={isDisabled}
                 />
               </div>
             </div>
@@ -208,8 +163,8 @@ export const ClientForm: React.FC<ClientFormProps> = ({
               <div className="relative w-full mb-3">
                 <textarea
                   type="text"
-                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    //@ts-ignore
+                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150"
+                  //@ts-ignore
 
                   rows={"4"}
                   defaultValue="A beautiful UI Kit and Admin for NextJS & Tailwind CSS. It is Free

@@ -1,0 +1,7 @@
+.project-form .ant-row.ant-form-item{
+  flex-direction: column;
+}
+
+.project-form .ant-form-item-label{
+  text-align: left;
+}

@@ -114,21 +114,21 @@ export default function Sidebar() {
               </li>
 
               <li className="items-center">
-                <Link href="/admin/settings">
+                <Link href="/projects">
                   <a
-                    href="#pablo"
+                    href="#projects"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/admin/settings") !== -1
-                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      (router.pathname.indexOf("/projects") !== -1
+                        ? "text-blueGray-700 hover:text-lightBlue-600"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
                   >
                     <i
                       className={
                         "fas fa-project-diagram mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/settings") !== -1
-                          ? "opacity-75"
+                        (router.pathname.indexOf("/projects") !== -1
+                          ? "text-yellow"
                           : "text-blueGray-300")
                       }
                     ></i>{" "}

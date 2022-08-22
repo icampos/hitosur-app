@@ -1,5 +1,6 @@
 @import "./antd/Drawer.module.css";
 @import "./antd/Table.module.css";
+@import "./antd/Form.module.css";
 
 .table {
     --bs-table-bg: transparent;
@@ -234,3 +235,8 @@
       -webkit-overflow-scrolling: touch;
     }
   }
+
+
+.text-yellow{
+  color: #EAB304
+}

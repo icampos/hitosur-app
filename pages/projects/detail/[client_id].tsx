@@ -5,7 +5,6 @@ import { gql, useQuery } from "@apollo/client";
 // components
 import { CardSettings } from "components/Forms/CardSettings";
 import CardProfile from "components/Cards/CardProfile.js";
-import { ClientForm } from "../../../components/Forms/projectForm";
 // layout for page
 import SubAdmin from "layouts/SubAdmin.js";
 
@@ -55,11 +54,11 @@ export default function Details() {
             status={status}
             isDisabled={isDisabled}
           >
-            <ClientForm
+          {/*}  <ProjectForm
               subtititle={"Client Information"}
               client={client}
               isDisabled={isDisabled}
-            />
+  />*/}
           </CardSettings>
         </div>
         <div className="w-full lg:w-4/12 px-4">
