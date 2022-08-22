@@ -16,8 +16,6 @@ import { ProjectSummary } from "components/DataDisplay/ProjectSummary";
 import { ProjectDetails } from "components/DataDisplay/ProjectDetails";
 import { ProjectTitle } from "components/DataDisplay/ProjectTitle";
 
-import {ProjectForm} from "components/Forms/ProjectForm";
-
 // Layout for page
 import SubAdmin from "layouts/SubAdmin.js";
 
@@ -158,7 +156,7 @@ export default function Dashboard() {
           visible={isAddDrawerVisible}
           key={"placement"}
         >
-          <ProjectForm />
+         <h1>Project Form</h1>
         </Drawer>
       )}
     </>
