@@ -6,10 +6,7 @@ import dayjs from "dayjs";
 import { Button, Drawer, Tabs, Empty } from "antd";
 import { WeeklyAgenda } from "components/Calendar/WeeklyAgenda";
 // Library Components
-import CardLineChart from "components/Cards/CardLineChart.js";
-import CardBarChart from "components/Cards/CardBarChart.js";
-import CardPageVisits from "components/Cards/CardPageVisits.js";
-import CardSocialTraffic from "components/Cards/CardSocialTraffic.js";
+import Reminders from "components/DataDisplay/Reminders";
 
 import { CardContainer } from "components/Cards/CardContainer";
 import { ProjectSummary } from "components/DataDisplay/ProjectSummary";
@@ -20,6 +17,7 @@ import { ProjectTitle } from "components/DataDisplay/ProjectTitle";
 import SubAdmin from "layouts/SubAdmin.js";
 
 import { CurrentWeekProjectsQuery } from "queries/projects";
+import { AllRemindersQuery } from "queries/reminders";
 
 export default function Dashboard() {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
@@ -28,6 +26,8 @@ export default function Dashboard() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [dailyAgenda, setDailyAgenda] = useState(null);
   const { data, loading, error } = useQuery(CurrentWeekProjectsQuery);
+
+  const { data: remindersData, loading: isLoadingReminders } = useQuery(AllRemindersQuery);
 
   const projects = data?.currentWeekProjects;
 
@@ -56,7 +56,7 @@ export default function Dashboard() {
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
           <CardContainer color="light">
-            <div className="p-8 pt-2 pb-0">
+            <div className="p-8 pt-2 pb-6">
               <Tabs defaultActiveKey="2" onChange={onChange}>
                 <TabPane
                   tab={
@@ -114,21 +114,8 @@ export default function Dashboard() {
           </CardContainer>
         </div>
       </div>
-      <div className="flex flex-wrap">
-        <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-          <CardLineChart />
-        </div>
-        <div className="w-full xl:w-4/12 px-4">
-          <CardBarChart />
-        </div>
-      </div>
-      <div className="flex flex-wrap mt-4">
-        <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-          <CardPageVisits />
-        </div>
-        <div className="w-full xl:w-4/12 px-4">
-          <CardSocialTraffic />
-        </div>
+      <div className="flex flex-wrap w-full mb-12 px-4">
+          {remindersData && (<Reminders reminders={remindersData.reminders}/> )}
       </div>
       {selectedProject && (
         <Drawer
@@ -143,6 +130,7 @@ export default function Dashboard() {
           onClose={() => setIsDrawerVisible(false)}
           visible={isDrawerVisible}
           key={"placement"}
+          width={'700px'}
         >
           <ProjectDetails project={selectedProject} />
         </Drawer>

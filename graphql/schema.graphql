@@ -43,6 +43,14 @@ type Document {
   projectId: String
 }
 
+type Note {
+  date: String
+  id: String
+  note: String
+  project: Project
+  projectId: String
+}
+
 type Project {
   address: String
   collaborators: [Collaborator]
@@ -53,7 +61,7 @@ type Project {
   id: String
   location: String
   name: String
-  notes: String
+  notes: [Note]
   projectType: ProjectType
   startDate: Date
   status: ProjectStatus
@@ -80,14 +88,25 @@ type Query {
   customers: [Customer]!
   document(id: String): Document!
   documents: [Document]!
+  note: [Note]!
   project(id: String): Project
   projectType(id: String): ProjectType!
   projectTypes: [ProjectType]!
   projects: [Project]!
+  reminders: [Reminder]!
   taskType(id: String): TaskType!
   taskTypes: [TaskType]!
   tasks: [Task]!
   users: [User]!
+}
+
+type Reminder {
+  assignee: Collaborator
+  assigneeId: String
+  date: String
+  description: String
+  status: String
+  title: String
 }
 
 enum Role {

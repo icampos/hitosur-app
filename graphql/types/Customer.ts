@@ -1,6 +1,5 @@
 // /graphql/types/User.ts
 import { extendType, objectType, enumType, stringArg } from "nexus";
-import { Project } from "./Project";
 
 export const Customer = objectType({
   name: "Customer",

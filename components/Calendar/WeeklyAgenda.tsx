@@ -31,7 +31,7 @@ export const WeeklyAgenda = ({ projects, onProjectClick }: WeeklyAgendaProps) =>
         return (
           <>
             <div className="mb-2 first-of-type:mt-0">
-              <h3 className="text-blueGray-700 mb-8 text-lg">
+              <h3 className="text-blueGray-700 mb-4 text-lg">
                 {dayjs(day).format("ddd, DD MMMM")}
               </h3>
               {weeklyProjects[day]?.map((project) => (
@@ -43,7 +43,7 @@ export const WeeklyAgenda = ({ projects, onProjectClick }: WeeklyAgendaProps) =>
                 />
               ))}
             </div>
-            <hr className="mb-6" />
+            <hr className="mb-6 mt-6"/>
           </>
         );
       })}

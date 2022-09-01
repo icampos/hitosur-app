@@ -4,6 +4,7 @@ import { Collaborator } from './Collaborator'
 import { Document } from './Document'
 import { Customer } from './Customer'
 import { ProjectType } from './ProjectType'
+import { Note } from './Note'
 
 import { currentWeek } from 'utils/calendar'
 
@@ -67,6 +68,18 @@ export const Project = objectType({
             },
           })
           .documents()
+      },
+    })
+    t.list.field('notes', {
+      type: Note,
+      async resolve(_parent, _args, ctx) {
+        return await ctx.prisma.project
+          .findUnique({
+            where: {
+              id: _parent.id,
+            },
+          })
+          .notes()
       },
     })
   },

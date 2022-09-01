@@ -29,7 +29,7 @@ export const WeeklyAgenda = ({ projects }: WeeklyAgendaProps) => {
                 />
               ))}
             </div>
-            <hr className="mb-6"/>
+            <hr className="mb-6 mt-6"/>
           </>
         );
       })}

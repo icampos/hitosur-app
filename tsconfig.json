@@ -27,7 +27,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/Cards/CardReminder.tsx"  ],
   "exclude": [
     "node_modules"
   ]

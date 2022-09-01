@@ -25,6 +25,15 @@ export const AllProjectsQuery = gql`
         projectType {
             type
         }
+        documents{
+          id
+          link
+          number
+        }
+        notes{
+          note
+          date
+        }
     }
   }
 `
@@ -52,6 +61,10 @@ export const ProjectQuery = gql`
         }
         projectType {
             type
+        }
+        customer {
+            name
+            phone
         }
     }
   }
@@ -87,6 +100,10 @@ export const CurrentWeekProjectsQuery = gql`
           id
           link
           number
+        }
+        notes{
+          note
+          date
         }
     }
   }

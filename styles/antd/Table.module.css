@@ -14,3 +14,21 @@ tbody > tr > td {
 th.ant-table-cell::before{
     display: none;
 }
+
+
+.ant-table-wrapper.bg-blueGray-700 th.ant-table-cell{
+    background-color: rgb(71, 85, 105) !important;
+    color: #fff !important;
+}
+
+.ant-table-wrapper.bg-blueGray-700  td{
+    background-color: rgb(51, 65, 85);
+    color: #fff;
+    border-bottom-color:rgb(51, 65, 85);
+}
+
+.ant-table-wrapper.bg-blueGray-700 td.ant-table-cell-row-hover{
+    background-color: rgb(51, 65, 85) !important;
+    color: #fff !important;
+    border-bottom-color:rgb(51, 65, 85) !important;
+}

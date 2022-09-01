@@ -16,6 +16,7 @@ model User {
   image     String?
   role      Role     @default(USER)
   collaborator Collaborator? 
+  reminders Reminder[]
 }
 
 model Customer {
@@ -87,7 +88,7 @@ model Collaborator {
   typeId   String    
   user      User? @relation(fields: [userId], references: [id])
   userId    String?  @unique // relation scalar field (used in the `@relation` attribute above)
-
+  reminders Reminder[]
 }
 
 model Document {
@@ -104,6 +105,18 @@ model Note {
   note      String
   project   Project @relation(fields: [projectId], references: [id])
   projectId String
+}
+
+model Reminder {
+  id       String  @id @default(uuid())
+  title    String
+  description String
+  date     DateTime
+  status    String
+  assignee  Collaborator @relation(fields: [assigneeId], references: [id])
+  assigneeId   String  @unique // relation scalar field (used in the `@relation` attribute above)
+  createdBy    User? @relation(fields: [createdById], references: [id])
+  createdById    String?  @unique // relation scalar field (used in the `@relation` attribute above)
 }
 
 enum Role {
@@ -125,4 +138,10 @@ enum ProjectTypeEnum {
 enum Status {
   ACTIVE
   INACTIVE
+}
+
+enum ReminderStatus {
+  PENDING
+  COMPLETED
+  CANCELED
 }

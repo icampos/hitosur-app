@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import dayjs from "dayjs";
-
 import { AllProjectsQuery } from "queries/projects";
 
 // Antd Components
-import { Table, Tooltip } from "antd";
+import { Table, Tooltip, Drawer } from "antd";
 
 // Custom Components
 import { Initials } from "components/DataDisplay/Initials";
 import { CardContainer } from "components/Cards/CardContainer";
 import { TaskStatus } from "components/DataDisplay/TaskStatus";
+import { ProjectNotes } from "components/DataDisplay/ProjectNotes";
+import { ProjectDetails } from "components/DataDisplay/ProjectDetails";
+import { ProjectTitle } from "components/DataDisplay/ProjectTitle";
 
 export default function ProjectList() {
   const { data, loading, error } = useQuery(AllProjectsQuery);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
@@ -37,22 +39,32 @@ export default function ProjectList() {
       dataIndex: "name",
       key: "name",
       fixed: "left",
+      render: (name: any) => <span className="text-sm">{name}</span>,
     },
     {
       title: "Client",
       dataIndex: "customer",
       key: "customer",
-      render: (customer: any) => <span>{customer.name}</span>,
+      render: (customer: any) => (
+        <span className="text-sm">{customer.name}</span>
+      ),
       fixed: "left",
     },
     {
       title: "Contact",
       dataIndex: "customer",
       key: "contact",
-      render: (customer: any) => <span>{customer.phone}</span>,
+      render: (customer: any) => (
+        <span className="text-sm">{customer.phone}</span>
+      ),
     },
 
-    { title: "Location", dataIndex: "location", key: "location" },
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      render: (location: any) => <span className="text-sm">{location}</span>,
+    },
     {
       title: "Date",
       dataIndex: "startDate",
@@ -61,8 +73,14 @@ export default function ProjectList() {
         { text: "2022", value: "2022" },
         { text: "2021", value: "2021" },
       ],
+      render: (startDate: any) => <span className="text-sm">{startDate}</span>,
     },
-    { title: "Address", dataIndex: "address", key: "address" },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+      render: (address: any) => <span className="text-sm">{address}</span>,
+    },
     {
       title: "Responsible",
       dataIndex: "collaborators",
@@ -117,7 +135,7 @@ export default function ProjectList() {
         { text: "Mario Andres", value: "Mario Andres" },
       ],
     },
-    {
+    /*{
       title: "Assistants",
       dataIndex: "collaborators",
       key: "assistant",
@@ -129,32 +147,31 @@ export default function ProjectList() {
             )
           );
         }),
-    },
+    },*/
 
     {
       title: "Visita",
       dataIndex: "name",
       key: "name",
-      render: (name: any) => <TaskStatus status="pending"/>,
-
+      render: (name: any) => <TaskStatus status="pending" />,
     },
     {
       title: "Dibujo",
       dataIndex: "name",
       key: "name",
-      render: (name: any) => <TaskStatus status="pending"/>,
+      render: (name: any) => <TaskStatus status="pending" />,
     },
     {
       title: "Reporte",
       dataIndex: "name",
       key: "name",
-      render: (name: any) => <TaskStatus status="pending"/>,
+      render: (name: any) => <TaskStatus status="pending" />,
     },
     {
       title: "Correo",
       dataIndex: "name",
       key: "name",
-      render: (name: any) => <TaskStatus status="pending"/>,
+      render: (name: any) => <TaskStatus status="pending" />,
     },
   ];
 
@@ -167,9 +184,34 @@ export default function ProjectList() {
             //@ts-ignore
             columns={columns}
             scroll={{ x: 1800 }}
+            loading={loading}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: (event) => {
+                  setSelectedRow(record);
+                }, // click row
+              };
+            }}
           />
         </div>
       </CardContainer>
+      <Drawer
+        title={
+          <ProjectTitle
+            projectType={selectedRow?.projectType.type}
+            name={selectedRow?.name}
+          />
+        }
+        placement="right"
+        closable={true}
+        onClose={() => setSelectedRow(null)}
+        visible={selectedRow}
+        key={"placement"}
+        destroyOnClose={true}
+        width={"700px"}
+      >
+        {selectedRow && <ProjectDetails project={selectedRow} />}
+      </Drawer>
     </>
   );
 }

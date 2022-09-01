@@ -1,0 +1,9 @@
+.reminder{
+    &__date {
+        border-right: 2px solid #EAB304;
+      }
+    &__description{
+        line-break: anywhere;
+    }  
+}
+
