@@ -37,7 +37,7 @@
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm run dev",
     "build:tailwind": "tailwind build styles/index.css -o styles/tailwind.css",
     "ts-node": "ts-node --compiler-options '{\\\"module\\\":\\\"commonjs\\\"}'",
-    "prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE=\"dataproxy\" prisma generate",
+    "prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE=\"dataproxy\" npx prisma generate",
     "vercel-build": "npm run prisma:generate && next build"
   },
   "eslintConfig": {
