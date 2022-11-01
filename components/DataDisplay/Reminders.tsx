@@ -3,6 +3,7 @@ import CardReminder from "components/Cards/CardReminder";
 
 interface RemidersProps {
   reminders: any;
+  onCreateReminder: any;
 }
 
 export default function Reminders({ reminders }: RemidersProps) {
