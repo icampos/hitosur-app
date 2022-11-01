@@ -43,6 +43,11 @@ type Document {
   projectId: String
 }
 
+type Mutation {
+  createNote(date: String!, note: String!, projectId: String!): Note!
+  deleteNote(id: String!): Note!
+}
+
 type Note {
   date: String
   id: String

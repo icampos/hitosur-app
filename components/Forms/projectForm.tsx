@@ -23,8 +23,8 @@ export const ProjectForm: React.FC<ClientFormProps> = ({ subtititle }) => {
                     { required: true, message: "Please input project's name" },
                   ]}
                 >
-                  <Input className="block border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none w-full ease-linear transition-all duration-150" />
-                </Form.Item>
+                  <Input className="block borde px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none w-full ease-linear transition-all duration-150" />
+                </Form.Item>r-0
               </div>
               <div className="relative w-full mb-3">
                 <Form.Item

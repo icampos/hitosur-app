@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import { getSession } from "@auth0/nextjs-auth0";
 import { useQuery } from "@apollo/client";
-import { Badge, Calendar } from "antd";
-import type { CalendarMode } from "antd/es/calendar/generateCalendar";
+import {  Calendar } from "antd";
 import { ProjectDetails } from "components/DataDisplay/ProjectDetails";
 import { ProjectTitle } from "components/DataDisplay/ProjectTitle";
 // Antd Components
 import { Drawer } from "antd";
 import { CardContainer } from "components/Cards/CardContainer";
-import moment, {Moment} from 'moment'
-import type { BadgeProps } from 'antd';
 
 // Layout for page
 import SubAdmin from "layouts/SubAdmin.js";

@@ -31,6 +31,7 @@ export const AllProjectsQuery = gql`
           number
         }
         notes{
+          id
           note
           date
         }
@@ -39,9 +40,9 @@ export const AllProjectsQuery = gql`
 `
 
 export const ProjectQuery = gql`
-  query ($projectId: String){
-    project(id: $projectId) {
-        id
+  query ($id: String){
+    project(id: $id) {
+      id
         name
         address
         location
@@ -55,6 +56,7 @@ export const ProjectQuery = gql`
         }
         collaborators {
          name
+         lastName
          collaboratorType{
           type
          }
@@ -62,9 +64,15 @@ export const ProjectQuery = gql`
         projectType {
             type
         }
-        customer {
-            name
-            phone
+        documents{
+          id
+          link
+          number
+        }
+        notes{
+          id
+          note
+          date
         }
     }
   }

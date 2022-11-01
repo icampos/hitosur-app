@@ -22,7 +22,7 @@ export default function Reminders({ reminders }: RemidersProps) {
           <hr className="mt-5"/>
 
         </div>
-        <div className="flex-auto px-4 lg:px-8 pb-6">
+        <div className="flex-auto px-4 lg:px-8 pb-6 bg-white">
           {reminders?.map((reminder) => {
             return (
               <>

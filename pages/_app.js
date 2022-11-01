@@ -14,7 +14,7 @@ import "styles/tailwind.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import 'antd/dist/antd.css';
 import "styles/custom.css";
-
+import 'material-icons/iconfont/material-icons.css';
 
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);
@@ -81,6 +81,7 @@ export default class MyApp extends App {
           />
           <title>HitoSur</title>
           <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+          
         </Head>
         <Layout>
           <Component {...pageProps} />
