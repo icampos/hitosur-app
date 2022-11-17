@@ -20,7 +20,7 @@ export const CardContainer: React.FC<CardContainerProps> = ({
         }
       >
         {title && (
-          <div className="rounded-t mb-0 px-4 py-3 border-0">
+          <div className="rounded-t mb-0 px-4 py-3 border">
             <div className="flex flex-wrap items-center">
               <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                 <h3

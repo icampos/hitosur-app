@@ -1,6 +1,10 @@
 @import "./antd/Drawer.module.css";
 @import "./antd/Table.module.css";
 @import "./antd/Form.module.css";
+@import "./antd/Input.module.css";
+@import "./antd/Button.module.css";
+@import "./antd/Datepicker.module.css";
+@import "./antd/Tabs.module.css";
 
 .table {
     --bs-table-bg: transparent;

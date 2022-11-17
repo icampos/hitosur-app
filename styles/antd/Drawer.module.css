@@ -19,3 +19,7 @@
   display: flex;
   align-items: center;
 }
+
+.ant-drawer.form .ant-drawer-body{
+  background-color: #F1F5F9;
+}

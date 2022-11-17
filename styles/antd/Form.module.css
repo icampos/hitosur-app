@@ -5,3 +5,7 @@
 .project-form .ant-form-item-label{
   text-align: left;
 }
+
+.client-form .ant-row.ant-form-item, .project-form .ant-row.ant-form-item{
+  display: contents !important;
+}

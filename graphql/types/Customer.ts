@@ -1,5 +1,5 @@
 // /graphql/types/User.ts
-import { extendType, objectType, enumType, stringArg } from "nexus";
+import { extendType, objectType, enumType, stringArg, nonNull } from "nexus";
 
 export const Customer = objectType({
   name: "Customer",
@@ -58,6 +58,41 @@ export const CustomerQueryTest = extendType({
     });
   },
 });
+
+export const CreateClientMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('createClient', {
+      type: Customer,
+      args: {
+        name: nonNull(stringArg()),
+        lastName: nonNull(stringArg()),
+        phone: nonNull(stringArg()),
+        email: nonNull(stringArg()),
+        address: nonNull(stringArg()),
+      },
+      async resolve(_parent, args, ctx) {
+
+        if (!ctx.user) {
+          throw new Error(`You need to be logged in to perform an action`)
+        }
+
+        const newClient = {
+          name: args.name,
+          lastName: args.lastName,
+          phone: args.phone,
+          email: args.email,
+          address: args.address,
+        }
+
+        return await ctx.prisma.customer.create({
+          //@ts-ignore
+          data: newClient,
+        })
+      },
+    })
+  },
+})
 
 
 /*const Address = objectType({

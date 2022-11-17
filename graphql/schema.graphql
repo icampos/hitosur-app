@@ -44,7 +44,9 @@ type Document {
 }
 
 type Mutation {
+  createClient(address: String!, email: String!, lastName: String!, name: String!, phone: String!): Customer!
   createNote(date: String!, note: String!, projectId: String!): Note!
+  createProject(address: String!, assistant: String, customer: String!, endDate: String, name: String!, note: String, onField: String!, responsible: String!, startDate: String!, typeId: String!): Project!
   deleteNote(id: String!): Note!
 }
 

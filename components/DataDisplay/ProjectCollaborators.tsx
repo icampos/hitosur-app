@@ -28,7 +28,7 @@ export const ProjectCollaborators = ({
       {direction === "flex-row" && (
         <InlineProjectCollaborators collaborators={sortedCollaborators} />
       )}
-       {direction === "flex-col" && (
+      {direction === "flex-col" && (
         <ColumnProjectCollaborators collaborators={sortedCollaborators} />
       )}
     </>
@@ -49,7 +49,7 @@ const InlineProjectCollaborators = (props) => {
               src="/img/team-1-800x800.jpg"
               alt="..."
               className="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow -ml-4 mr-2"
-            ></img>
+            />
           </Tooltip>
         </>
       ))}
@@ -61,7 +61,12 @@ const ColumnProjectCollaborators = (props) => {
   return (
     <>
       {props.collaborators.map((collaborator) => {
-        const icon = collaborator.collaboratorType.type === 'RESPONSIBLE' ? 'fa-user-shield' : collaborator.collaboratorType.type === 'ON_FIELD' ? 'fa-user-gear' : 'fa-users-gear'
+        const icon =
+          collaborator.collaboratorType.type === "RESPONSIBLE"
+            ? "fa-user-shield"
+            : collaborator.collaboratorType.type === "ON_FIELD"
+            ? "fa-user-gear"
+            : "fa-users-gear";
         return (
           <ProjectField
             Icon={<i className={`fas ${icon}`} />}
@@ -72,5 +77,3 @@ const ColumnProjectCollaborators = (props) => {
     </>
   );
 };
-
-

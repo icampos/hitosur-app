@@ -16,7 +16,7 @@ export const ProjectSummary = ({
 
   return (
     <>
-      <div className="project-summary" onClick={() => onClick()}>
+      <div className="project-summary mb-6" onClick={() => onClick()}>
         <div>
           <ProjectTitle projectType={projectType.type} name={name} />
         </div>

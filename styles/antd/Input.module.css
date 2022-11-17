@@ -1,0 +1,25 @@
+.ant-input, .ant-select-selector{
+    border-radius: 0.25rem !important;
+    padding: 0.75rem !important;
+    border: none !important;
+}
+
+.ant-form-item-label label{
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.ant-select-selection-search-input{
+    height:44px !important;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector{
+    height:44px !important;
+}
+
+.ant-select-single .ant-select-selector{
+    align-items: center;
+}

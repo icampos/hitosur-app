@@ -41,13 +41,14 @@ model Project {
   endDate       DateTime?
   description   String?
   address       String?
-  customer      Customer?      @relation(fields: [id], references: [id])
+  customer      Customer?      @relation(fields: [customerId], references: [id])
+  customerId    String? 
   collaborators Collaborator[]
   type          ProjectType?    @relation(fields: [typeId], references: [id])
   typeId        String         
   documents     Document[]
   notes         Note[]
-  tasks         Task[] 
+  tasks         Task[]
 
 }
 
@@ -56,8 +57,8 @@ model Task {
   status          String
   type           TaskType      @relation(fields: [typeId], references: [id])
   typeId         String        @unique
-  project         Project @relation(fields: [projectId], references: [id])
-  projectId       String
+  project         Project? @relation(fields: [projectId], references: [id])
+  projectId       String?
 }
 
 model ProjectType {
@@ -95,16 +96,16 @@ model Document {
   id       String  @id @default(uuid())
   number    String
   link      String
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId String
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
 }
 
 model Note {
   id       String  @id @default(uuid())
   date    String
   note      String
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId String
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
 }
 
 model Reminder {

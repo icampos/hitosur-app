@@ -18,6 +18,7 @@
     "chart.js": "2.9.4",
     "dayjs": "^1.11.4",
     "emotion": "^11.0.0",
+    "googleapis": "^109.0.1",
     "graphql": "^16.4.0",
     "graphql-iso-date": "^3.6.1",
     "gulp": "4.0.2",

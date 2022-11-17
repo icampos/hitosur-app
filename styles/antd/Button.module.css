@@ -1,0 +1,12 @@
+.ant-btn-primary{
+    border-radius: 0.25rem;
+    background-color: #334254;
+    border-color: #334254;
+    font-weight: 700;
+    font-size: 0.875rem;
+    min-height: 44px;
+}
+.ant-btn-primary.height-xs{
+    min-height: 32px;
+    font-size: 0.75rem;
+} 

@@ -81,7 +81,8 @@ export default class MyApp extends App {
           />
           <title>HitoSur</title>
           <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-          
+          <script src="https://apis.google.com/js/api.js"></script>
+
         </Head>
         <Layout>
           <Component {...pageProps} />

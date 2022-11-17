@@ -27,7 +27,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/Cards/CardReminder.tsx"  ],
+, "components/Cards/CardReminder.tsx", "lib/googleContacts.js"  ],
   "exclude": [
     "node_modules"
   ]

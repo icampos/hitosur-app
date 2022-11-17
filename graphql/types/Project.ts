@@ -1,5 +1,5 @@
 // /graphql/types/User.ts
-import { extendType, objectType, enumType, stringArg } from 'nexus'
+import { extendType, objectType, enumType, stringArg, nonNull, list } from 'nexus'
 import { Collaborator } from './Collaborator'
 import { Document } from './Document'
 import { Customer } from './Customer'
@@ -7,6 +7,9 @@ import { ProjectType } from './ProjectType'
 import { Note } from './Note'
 
 import { currentWeek } from 'utils/calendar'
+
+import dayjs from "dayjs";
+
 
 export const Project = objectType({
   name: 'Project',
@@ -130,6 +133,68 @@ export const currentWeekProjectsQuery = extendType({
     });
   },
 });
+
+
+export const CreateProjectrMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('createProject', {
+      type: Project,
+      args: {
+        name: nonNull(stringArg()),
+        startDate: nonNull(stringArg()),
+        endDate: stringArg(),
+        address: nonNull(stringArg()),
+        typeId: nonNull(stringArg()),
+        responsible: nonNull(stringArg()),
+        onField: nonNull(stringArg()),
+        customer: nonNull(stringArg()),
+        assistant: stringArg(),
+        note: stringArg()
+      },
+      async resolve(_parent, args, ctx) {
+
+        if (!ctx.user) {
+          throw new Error(`You need to be logged in to perform an action`)
+        }
+
+        const newProject = {
+          name: args.name,
+          startDate: args.startDate,
+          endDate: args.endDate,
+          address: args.address,
+          type: {
+            connect: {
+              id: args.typeId
+            }
+          },
+          collaborators: {
+            connect:
+              [{ id: args.responsible }, { id: args.onField }, {id: args.assistant}]
+          },
+          customer: {
+            connect: {
+              id: args.customer
+            }
+          },
+          notes: args.note ?  {
+            create: {
+              note: args.note || '',
+              date: dayjs().format(),
+            },
+          } : {},
+          documents: {},
+          tasks: {},
+        }
+
+        return await ctx.prisma.project.create({
+          //@ts-ignore
+          data: newProject,
+        })
+      },
+    })
+  },
+})
 
 
 const ProjectStatus = enumType({
