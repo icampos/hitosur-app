@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Timeline, Empty, Button } from "antd";
+import { Timeline, Empty, Button, Popconfirm } from "antd";
 import dayjs from "dayjs";
 import { NotesForm } from "components/Forms/NotesForm";
 import { gql, useMutation } from "@apollo/client";
@@ -69,33 +69,38 @@ export const ProjectNotes = ({ notes, refetch }: ProjectSummaryProps) => {
   return (
     <div>
       <>
-      {<NotesForm onFinish={onSubmit} isLoading={loading} />}
-      <hr className="my-6"/>
+        {<NotesForm onFinish={onSubmit} isLoading={loading} />}
+        <hr className="my-6" />
         <Timeline className="mt-6">
           {notes?.map((note) => {
             return (
               <>
-              <Timeline.Item color={color}>
-                <>
-                  <div className="flex flex-row place-content-between mb-2">
-                    <p className="font-bold">
-                      {dayjs(note.date).format("ddd, DD MMMM, YYYY")}
-                    </p>
-                    <div className="flex flex-row">
-                      <Button type="link" onClick={() => setIsEditMode(true)}>
-                        <i className="fa fa-edit" />
-                      </Button>
-                      <Button
-                        type="link"
-                        onClick={() => onDeleteNote({ id: note.id })}
-                      >
-                        <i className="fa fa-trash" />
-                      </Button>
+                <Timeline.Item color={color}>
+                  <>
+                    <div className="flex flex-row place-content-between mb-2">
+                      <p className="font-bold">
+                        {dayjs(note.date).format("ddd, DD MMMM, YYYY")}
+                      </p>
+                      <div className="flex flex-row">
+                        {/*<Button type="link" onClick={() => setIsEditMode(true)}>
+                          <i className="fa fa-edit" />
+            </Button>*/}
+                        <Popconfirm
+                          placement="bottom"
+                          title={"Are you sure to delete this note?"}
+                          onConfirm={() => onDeleteNote({ id: note.id })}
+                          okText="Yes"
+                          cancelText="No"
+                        >
+                          <Button type="link">
+                            <i className="fa fa-trash" />
+                          </Button>
+                        </Popconfirm>
+                      </div>
                     </div>
-                  </div>
-                  <p className="mb-0">{note.note}</p>
-                </>
-              </Timeline.Item>
+                    <p className="mb-0">{note.note}</p>
+                  </>
+                </Timeline.Item>
               </>
             );
           })}

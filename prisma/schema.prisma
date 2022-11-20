@@ -44,12 +44,12 @@ model Project {
   customer      Customer?      @relation(fields: [customerId], references: [id])
   customerId    String? 
   collaborators Collaborator[]
-  type          ProjectType?    @relation(fields: [typeId], references: [id])
+  type          ProjectType?    @relation(fields: [typeId], references: [type])
   typeId        String         
   documents     Document[]
   notes         Note[]
   tasks         Task[]
-
+  task          String
 }
 
 model Task {
@@ -63,7 +63,7 @@ model Task {
 
 model ProjectType {
   id      String    @id @default(uuid())
-  type    ProjectTypeEnum
+  type    String @unique
   Project Project[]
 }
 

@@ -12,6 +12,7 @@ export const ProjectSummary = ({
   project,
   onClick,
 }: ProjectSummaryProps) => {
+  
   const { name, address, customer, collaborators, projectType } = project;
 
   return (

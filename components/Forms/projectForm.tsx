@@ -54,10 +54,10 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({ onFinish, isLoading })
                 rules={[{ required: true, message: "Please select a type" }]}
               >
                 <Select className={genericClassName}>
-                  <Select.Option value="69691c71-32e4-449f-b4cc-2a97dfafb6d8">
+                  <Select.Option value="REPORTES_CURVAS">
                     Reportes y Curvas
                   </Select.Option>
-                  <Select.Option value="af1fd6be-a651-4ff2-a44b-72e07a3beb44">
+                  <Select.Option value="PLANO_CATASTRO">
                     Plano Catastro
                   </Select.Option>
                 </Select>

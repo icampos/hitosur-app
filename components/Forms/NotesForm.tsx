@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
-import RichTextEditor from "components/Editor";
 
 interface NotesFormProps {
   onFinish?: any;
@@ -9,52 +8,53 @@ interface NotesFormProps {
 
 export const NotesForm = ({ onFinish, isLoading = false }: NotesFormProps) => {
   const [note, setNote] = useState(null);
-  const [showEditor, setShowEditor] = useState(false);
   const buttonIcon = isLoading ? "fa fa-spinner" : "fa fa-save";
+
+  const onFormFinish = (values) => {
+    onFinish(values);
+    setNote(false);
+  };
+
+  const onNoteChange = (value) => {
+    if(value.target.value){
+      setNote(true)
+    }else{
+      setNote(false)
+    }
+  }
   return (
     <>
-   {/*}   <div className="flex-auto pt-0 p-4  border-1 border-blueGray-50 shadow">
-        {showEditor && (
-          <div className="p-4">
-            <RichTextEditor/>
-          </div>
-        )}
-        {!showEditor && (
-          <Input.TextArea
-            maxLength={500}
-            onClick={(value) => setShowEditor(true)}
-            placeholder={"Add a new note.."}
-          />
-        )}*/}
-        <div>
-        <Form onFinish={onFinish}>
+      <div>
+        <Form onFinish={onFormFinish}>
           <div className="flex flex-wrap">
             <div className="w-full">
               <div className="relative w-full mb-3">
-                <Form.Item
-                  style={{ display: "initial" }}
-                  name="note"
-                >
+                <Form.Item style={{ display: "initial" }} name="note">
                   <Input.TextArea
                     showCount
                     maxLength={500}
-                    onChange={(value) => setNote(true)}
+                    onClick={()=>setNote(true)}
+                    onChange={(value) => onNoteChange(value)}
                     placeholder={"Add a new note.."}
+                    className="border-0 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150"
                   />
                 </Form.Item>
               </div>
             </div>
-            <div className="w-full">
-              <div className="relative w-full mb-3">
-                <Form.Item>
-                  <Button htmlType="submit" type="primary" disabled={!note}>
-                    <i className={`${buttonIcon} mr-2`}/>Add note
-                  </Button>
-                </Form.Item>
+            {note && (
+              <div className="w-full">
+                <div className="relative w-full mb-3">
+                  <Form.Item className="text-right">
+                    <Button htmlType="submit" type="primary" disabled={!note} className="mt-3">
+                      <i className={`${buttonIcon} mr-2`} />
+                      Add note
+                    </Button>
+                  </Form.Item>
+                </div>
               </div>
-            </div>
+            )}
           </div>
-  </Form>
+        </Form>
       </div>
     </>
   );

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { getSession } from "@auth0/nextjs-auth0";
 import { useQuery, useMutation } from "@apollo/client";
 import dayjs from "dayjs";
+
+import {defaultTasks} from 'utils/tasks'
+
 // Antd Components
 import { Button, Drawer, Tabs, Empty } from "antd";
-import { WeeklyAgenda } from "components/Calendar/WeeklyAgenda";
 // Library Components
 import Reminders from "components/DataDisplay/Reminders";
 
@@ -13,30 +15,47 @@ import { ProjectSummary } from "components/DataDisplay/ProjectSummary";
 import { ProjectDetails } from "components/DataDisplay/ProjectDetails";
 import { ProjectTitle } from "components/DataDisplay/ProjectTitle";
 import { ProjectForm } from "components/Forms/ProjectForm";
+import { ReminderForm } from "components/Forms/ReminderForm";
+
+import { WeeklyAgenda } from "components/Calendar/WeeklyAgenda";
+
 // Layout for page
 import SubAdmin from "layouts/SubAdmin.js";
 
 import { CurrentWeekProjectsQuery } from "queries/projects";
 import { AllRemindersQuery } from "queries/reminders";
 import { CreateProjectMutation } from "mutations/project";
+import { CreateReminderMutation } from "mutations/reminder";
 
 export default function Dashboard() {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [isAddDrawerVisible, setIsAddDrawerVisible] = useState(false);
+  const [isAddReminderVisible, setIsAddReminderVisible] = useState(false);
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [dailyAgenda, setDailyAgenda] = useState(null);
   const { data, loading, error, refetch } = useQuery(CurrentWeekProjectsQuery);
 
-  const { data: remindersData, loading: isLoadingReminders } =
+  const { data: remindersData, loading: isLoadingReminders, refetch: refetchReminders } =
     useQuery(AllRemindersQuery);
+
   const [
     createProject,
     { loading: loadingAddProject, error: errorAddingProject },
   ] = useMutation(CreateProjectMutation, {
     onCompleted: () => {
-        refetch();
+        refetchReminders();
         setIsAddDrawerVisible(false)
+    },
+  });
+
+  const [
+    createReminder,
+    { loading: loadingAddReminder, error: errorAddingReminder },
+  ] = useMutation(CreateReminderMutation, {
+    onCompleted: () => {
+        refetchReminders();
+        setIsAddReminderVisible(false)
     },
   });
 
@@ -74,7 +93,8 @@ export default function Dashboard() {
     const formattedStartDate = dayjs(startDate).format();
     const formattedEndDate = endDate ? dayjs(startDate).format() : null;
 
-    console.log(formattedStartDate);
+    const tasks = defaultTasks(typeId)
+
     const variables = {
       name,
       startDate: formattedStartDate,
@@ -85,10 +105,34 @@ export default function Dashboard() {
       onField,
       customer,
       assistant,
-      note
+      note,
+      task: JSON.stringify(tasks)
     };
     try {
       createProject({ variables });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onFinishAddReminder = async (data) => {
+    const {
+      title,
+      description,
+      date,
+      assignee,
+    } = data;
+    const formattedDate = dayjs(date).format();
+
+    const variables = {
+      title,
+      description,
+      date:formattedDate,
+      assignee,
+      status: 'pending'
+    };
+    try {
+      createReminder({ variables });
     } catch (error) {
       console.error(error);
     }
@@ -173,7 +217,7 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="flex flex-wrap w-full mb-12 px-4">
-        {remindersData && <Reminders reminders={remindersData.reminders} />}
+        {remindersData && <Reminders reminders={remindersData.reminders} onCreateReminder={()=>setIsAddReminderVisible(true)} />}
       </div>
       {selectedProject && (
         <Drawer
@@ -207,6 +251,22 @@ export default function Dashboard() {
           width={"700px"}
         >
           <ProjectForm onFinish={onFinish} isLoading={loadingAddProject} />
+        </Drawer>
+      )}
+       {isAddReminderVisible && (
+        <Drawer
+          className="form"
+          title={
+            <h6 className="text-blueGray-700 text-xl font-bold">Add Reminder</h6>
+          }
+          placement="right"
+          closable={true}
+          onClose={() => setIsAddReminderVisible(false)}
+          visible={isAddReminderVisible}
+          key={"placement"}
+          width={"700px"}
+        >
+          <ReminderForm onFinish={onFinishAddReminder} isLoading={loadingAddReminder} />
         </Drawer>
       )}
     </>

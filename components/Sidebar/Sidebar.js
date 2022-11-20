@@ -90,12 +90,12 @@ export default function Sidebar() {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
-                <Link href="/">
+                <Link href="/dashboard">
                   <a
-                    href="#pablo"
+                    href="#dashboard"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/admin/dashboard") !== -1
+                      (router.pathname.indexOf("/dashboard") !== -1
                         ? "text-lightBlue-500 hover:text-lightBlue-600"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
@@ -103,8 +103,8 @@ export default function Sidebar() {
                     <i
                       className={
                         "fas fa-calendar mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/dashboard") !== -1
-                          ? "opacity-75"
+                        (router.pathname.indexOf("/dashboard") !== -1
+                          ? "text-yellow"
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
@@ -140,7 +140,7 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link href="/admin/tables">
                   <a
-                    href="#pablo"
+                    href="#tasks"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
                       (router.pathname.indexOf("/admin/tables") !== -1
@@ -164,7 +164,7 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link href="/clients">
                   <a
-                    href="#pablo"
+                    href="#clients"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
                       (router.pathname.indexOf("/clients") !== -1
@@ -176,7 +176,7 @@ export default function Sidebar() {
                       className={
                         "fas fa-handshake mr-2 text-sm " +
                         (router.pathname.indexOf("/clients") !== -1
-                          ? "opacity-75"
+                          ? "text-yellow"
                           : "text-blueGray-300")
                       }
                     ></i>{" "}

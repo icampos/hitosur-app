@@ -35,6 +35,7 @@ export const AllProjectsQuery = gql`
           note
           date
         }
+        task
     }
   }
 `
@@ -74,6 +75,7 @@ export const ProjectQuery = gql`
           note
           date
         }
+        task
     }
   }
 `

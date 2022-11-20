@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { ProjectField } from "components/DataDisplay/ProjectField";
 import { TaskStatus } from "components/DataDisplay/TaskStatus";
 import { ProjectCollaborators } from "components/DataDisplay/ProjectCollaborators";
 import { ProjectNotes } from "components/DataDisplay/ProjectNotes";
-import { ProjectContext } from 'context/ProjectContext';
+import { ProjectContext } from "context/ProjectContext";
 import { ProjectQuery } from "queries/projects";
 import { useQuery } from "@apollo/client";
 
-import { Tabs } from "antd";
+import { Button, Tabs } from "antd";
 import dayjs from "dayjs";
 
 interface ProjectSummaryProps {
@@ -20,16 +20,37 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
   const { id } = project;
 
   const { data, loading, error, refetch } = useQuery(ProjectQuery, {
-    variables: {id: id}
+    variables: { id: id },
   });
+
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      const tasks = JSON.parse(data?.project.task);
+      setTasks(tasks);
+    }
+  }, [data]);
 
   if (loading) return null;
   if (error) return `Error! ${error}`;
- 
+
   return (
     <ProjectContext.Provider value={data.project}>
       <div>
-        <Tabs defaultActiveKey="1">
+        <Tabs
+          defaultActiveKey="1"
+          tabBarExtraContent={
+            <Button
+              className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 height-xs"
+              type="primary"
+              onClick={() => console.log(true)}
+              icon={<i className="fa fa-edit mr-2" />}
+            >
+              Edit Event
+            </Button>
+          }
+        >
           <TabPane
             tab={
               <h3 className="font-semibold text-base mb-2 mt-2 text-blueGray-700">
@@ -41,7 +62,7 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
             <div className="pb-4">
               <ProjectField
                 Icon={<i className="fas fa-calendar" />}
-                field={dayjs(project.startDate).format("ddd, DD MMMM")}
+                field={dayjs(data.project.startDate).format("ddd, DD MMMM")}
               />
               <ProjectField
                 Icon={<i className="fas fa-handshake" />}
@@ -63,22 +84,24 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
             </div>
             <hr />
             <div className="text-sm py-6">
-              <TaskStatus status="pending" title="Visita" />
-              <TaskStatus status="done" title="Dibujo" />
-              <TaskStatus status="done" title="Reporte" />
-              <TaskStatus status="done" title="Foto" />
-              <TaskStatus status="blocked" title="Correo" />
+              {tasks.map((task) => (
+                <TaskStatus status={task.status} title={task.title} />
+              ))}
             </div>
 
             <hr />
+            
             <div className="text-sm py-6">
-              {data.project.documents.map((document) => (
+            {data.project.documents.length > 0 ? (
+               data.project.documents.map((document) => (
                 <ProjectField
                   Icon={<i className="fas fa-file-image" />}
                   field={document.number}
                   link={document.link}
                 />
-              ))}
+              ))
+              ): <>No documents has been attached</>}
+             
             </div>
           </TabPane>
           <TabPane

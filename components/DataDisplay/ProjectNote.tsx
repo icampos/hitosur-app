@@ -57,7 +57,6 @@ export const ProjectNotes = ({ notes, refetch }: ProjectSummaryProps) => {
   const onDeleteNote = async (data) => {
     const { id } = data;
     const variables = { id: id };
-    console.log(variables);
     try {
       //@ts-ignore
       deleteNote({ variables });
@@ -73,10 +72,10 @@ export const ProjectNotes = ({ notes, refetch }: ProjectSummaryProps) => {
           {dayjs(note.date).format("ddd, DD MMMM, YYYY")}
         </p>
         <div className="flex flex-row">
-          <Button type="link" onClick={() => setIsEditMode(true)}>
+          <Button type="primary" onClick={() => setIsEditMode(true)}>
             <i className="fa fa-edit" />
           </Button>
-          <Button type="link" onClick={() => onDeleteNote({ id: note.id })}>
+          <Button type="primary" onClick={() => onDeleteNote({ id: note.id })}>
             <i className="fa fa-trash" />
           </Button>
         </div>

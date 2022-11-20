@@ -11,10 +11,7 @@ import { ClientForm } from "components/Forms/ClientForm";
 
 import {CreateClientMutation} from 'mutations/client'
 
-import {run} from 'lib/googleContacts'
-
 export default function ProjectList() {
-  run()
   const { data, loading, error, refetch } = useQuery(AllClientsQuery);
   const [selectedRow, setSelectedRow] = useState(null);
   const [addClientEnabled, setAddClientEnabled] = useState(false);

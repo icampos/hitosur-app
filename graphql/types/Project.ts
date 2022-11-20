@@ -25,6 +25,7 @@ export const Project = objectType({
     t.string('address')
     t.string('typeId')
     t.string('notes')
+    t.string('task')
     t.field("status", { type: ProjectStatus })
     t.field('customer', {
       type: Customer,
@@ -44,7 +45,7 @@ export const Project = objectType({
         return await ctx.prisma.projectType
           .findUnique({
             where: {
-              id: _parent.typeId,
+              type: _parent.typeId,
             },
           })
       },
@@ -147,10 +148,11 @@ export const CreateProjectrMutation = extendType({
         address: nonNull(stringArg()),
         typeId: nonNull(stringArg()),
         responsible: nonNull(stringArg()),
-        onField: nonNull(stringArg()),
+        onField: stringArg(),
         customer: nonNull(stringArg()),
         assistant: stringArg(),
-        note: stringArg()
+        note: stringArg(),
+        task: nonNull(stringArg()),
       },
       async resolve(_parent, args, ctx) {
 
@@ -165,7 +167,7 @@ export const CreateProjectrMutation = extendType({
           address: args.address,
           type: {
             connect: {
-              id: args.typeId
+              type: args.typeId
             }
           },
           collaborators: {
@@ -185,6 +187,7 @@ export const CreateProjectrMutation = extendType({
           } : {},
           documents: {},
           tasks: {},
+          task: args.task
         }
 
         return await ctx.prisma.project.create({

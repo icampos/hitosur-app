@@ -10,3 +10,7 @@
     min-height: 32px;
     font-size: 0.75rem;
 } 
+
+.ant-popover-buttons .ant-btn {
+    min-height: 24px;
+}

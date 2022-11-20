@@ -31,7 +31,7 @@ export default function CardReminder({
             <div
               className={`${styles.reminder__date} self-stretch mr-4 flex-1`}
             >
-              <span className="font-semibold text-sm text-blueGray-700">
+              <span className="font-semibold text-sm text-blueGray-700 mr-2">
                 {dayjs(date).format("ddd, DD MMMM")}
               </span>
             </div>
