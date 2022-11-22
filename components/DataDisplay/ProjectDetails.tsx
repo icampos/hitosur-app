@@ -5,6 +5,7 @@ import { ProjectCollaborators } from "components/DataDisplay/ProjectCollaborator
 import { ProjectNotes } from "components/DataDisplay/ProjectNotes";
 import { ProjectContext } from "context/ProjectContext";
 import { ProjectQuery } from "queries/projects";
+import { ProjectForm } from "components/Forms/ProjectForm";
 import { useQuery } from "@apollo/client";
 
 import { Button, Tabs } from "antd";
@@ -24,6 +25,7 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
   });
 
   const [tasks, setTasks] = useState([]);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -44,7 +46,7 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
             <Button
               className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 height-xs"
               type="primary"
-              onClick={() => console.log(true)}
+              onClick={() => setIsEditMode(true)}
               icon={<i className="fa fa-edit mr-2" />}
             >
               Edit Event
@@ -59,29 +61,34 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
             }
             key="1"
           >
-            <div className="pb-4">
-              <ProjectField
-                Icon={<i className="fas fa-calendar" />}
-                field={dayjs(data.project.startDate).format("ddd, DD MMMM")}
-              />
-              <ProjectField
-                Icon={<i className="fas fa-handshake" />}
-                field={data.project.customer.name}
-              />
-              <ProjectField
-                Icon={<i className="fas fa-location-dot" />}
-                field={data.project.address}
-              />
-              <ProjectField
-                Icon={<i className="fas fa-mobile" />}
-                field={data.project.customer.phone}
-              />
+            {!isEditMode ? (
+              <div className="pb-4">
+                <ProjectField
+                  Icon={<i className="fas fa-calendar" />}
+                  field={dayjs(data.project.startDate).format("ddd, DD MMMM")}
+                />
+                <ProjectField
+                  Icon={<i className="fas fa-handshake" />}
+                  field={data.project.customer.name}
+                />
+                <ProjectField
+                  Icon={<i className="fas fa-location-dot" />}
+                  field={data.project.address}
+                />
+                <ProjectField
+                  Icon={<i className="fas fa-mobile" />}
+                  field={data.project.customer.phone}
+                />
 
-              <ProjectCollaborators
-                direction="flex-col"
-                collaborators={data.project.collaborators}
-              />
-            </div>
+                <ProjectCollaborators
+                  direction="flex-col"
+                  collaborators={data.project.collaborators}
+                />
+              </div>
+            ) : (
+              <ProjectForm isUpdate={true} onFinish={()=>{console.log('test')} } isLoading={false} initialValues={data.project}/>
+            )}
+
             <hr />
             <div className="text-sm py-6">
               {tasks.map((task) => (
@@ -90,18 +97,19 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
             </div>
 
             <hr />
-            
+
             <div className="text-sm py-6">
-            {data.project.documents.length > 0 ? (
-               data.project.documents.map((document) => (
-                <ProjectField
-                  Icon={<i className="fas fa-file-image" />}
-                  field={document.number}
-                  link={document.link}
-                />
-              ))
-              ): <>No documents has been attached</>}
-             
+              {data.project.documents.length > 0 ? (
+                data.project.documents.map((document) => (
+                  <ProjectField
+                    Icon={<i className="fas fa-file-image" />}
+                    field={document.number}
+                    link={document.link}
+                  />
+                ))
+              ) : (
+                <>No documents has been attached</>
+              )}
             </div>
           </TabPane>
           <TabPane

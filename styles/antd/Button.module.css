@@ -11,6 +11,6 @@
     font-size: 0.75rem;
 } 
 
-.ant-popover-buttons .ant-btn {
-    min-height: 24px;
+.ant-popover-buttons .ant-btn, .ant-table-filter-dropdown-btns .ant-btn{
+    min-height: 24px !important;
 }

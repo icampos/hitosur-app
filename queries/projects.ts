@@ -12,10 +12,12 @@ export const AllProjectsQuery = gql`
         description
         status
         customer {
+          id
             name
             phone
         }
         collaborators {
+          id
          name
          lastName
          collaboratorType{
@@ -52,10 +54,12 @@ export const ProjectQuery = gql`
         description
         status
         customer {
+          id
             name
             phone
         }
         collaborators {
+          id
          name
          lastName
          collaboratorType{
