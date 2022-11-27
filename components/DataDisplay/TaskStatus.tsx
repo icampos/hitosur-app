@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import {StatusSelect} from 'components/Forms/StatusSelect'
 
 interface TaskStatusProps {
   status: string;
   title?: string;
+  editable?: boolean; 
 }
 
-export const TaskStatus: React.FC<TaskStatusProps> = ({ status, title }) => {
+export const TaskStatus: React.FC<TaskStatusProps> = ({ status, title, editable=false }) => {
   const statusColors = {
     pending: "text-orange-500",
     done: "text-emerald-500",
@@ -23,13 +25,20 @@ export const TaskStatus: React.FC<TaskStatusProps> = ({ status, title }) => {
   const statusColor = statusColors[status];
   const statusIcon = statusIcons[status];
 
+  const [isEditMode, setIsEditMode] = useState(false)
+
   return (
-    <div className="status cursor-pointer flex justify-between align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-base mb-4">
+    <>
+    <div onClick={()=>setIsEditMode(true)} onBlur={()=>setIsEditMode(false)} className="status cursor-pointer flex justify-between align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-base mb-4">
       <div>
         <i className={`mr-2 ${statusColor} ${statusIcon}`}></i>{" "}
         <span className="capitalize ml-3">{title ? title : status}</span>
       </div>
       <div>{title && <i className="fas fa-edit hidden" />}</div>
     </div>
+    {editable && isEditMode && (
+      <StatusSelect />
+    )}
+    </>
   );
 };

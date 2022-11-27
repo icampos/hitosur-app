@@ -79,7 +79,7 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
                   Icon={<i className="fas fa-mobile" />}
                   field={data.project.customer.phone}
                 />
-
+                
                 <ProjectCollaborators
                   direction="flex-col"
                   collaborators={data.project.collaborators}
@@ -92,7 +92,7 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
             <hr />
             <div className="text-sm py-6">
               {tasks.map((task) => (
-                <TaskStatus status={task.status} title={task.title} />
+                <TaskStatus status={task.status} title={task.title} editable={true}/>
               ))}
             </div>
 

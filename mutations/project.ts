@@ -11,3 +11,15 @@ mutation ($name: String!, $startDate: String!, $endDate: String, $address: Strin
   }
 }
 `;
+
+export const UpdateProjectMutation = gql`
+mutation ($id: String!, $status: String!) {
+  updateProjectStatus(id: $id, status: $status) {
+    name
+    startDate
+    endDate
+    address
+    typeId
+  }
+}
+`;

@@ -200,6 +200,35 @@ export const CreateProjectrMutation = extendType({
 })
 
 
+export const UpdateProjectMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('updateProjectStatus', {
+      type: Project,
+      args: {
+        id: nonNull(stringArg()),
+        task: nonNull(stringArg()),
+      },
+      async resolve(_parent, args, ctx) {
+
+        if (!ctx.user) {
+          throw new Error(`You need to be logged in to perform an action`)
+        }
+
+        return await ctx.prisma.project.update({
+          where: {
+            id: args.id,
+          },
+          data: {
+            task: args.task,
+          }
+        })
+      },
+    })
+  },
+})
+
+
 const ProjectStatus = enumType({
   name: "ProjectStatus",
   members: ["COMPLETED", "IN_PROGRESS", "CANCELED", "DELAYED"],

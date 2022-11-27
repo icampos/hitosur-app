@@ -29,22 +29,17 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
 
   const buttonIcon = isLoading ? "fa fa-spinner" : "fa fa-save";
 
-  const test = getCollaborator(initialValues.collaborators, 'RESPONSIBLE')
-
-  console.log(test)
-  const formattedInitialValues = {
+  const formattedInitialValues = initialValues ? {
     name: initialValues.name,
     typeId: initialValues.projectType.type,
     address:initialValues.address,
     startDate: moment(initialValues.startDate),
     endDate: moment(initialValues.endDate),
     customer: initialValues.customer.id,
-    responsible: getCollaborator(initialValues.collaborators, 'RESPONSIBLE'),
-    onField: getCollaborator(initialValues.collaborators, 'ON_FIELD'),
-    assistant: getCollaborator(initialValues.collaborators, 'ASSISTANT'),
-
-
-  }
+    responsible: getCollaborator(initialValues?.collaborators, 'RESPONSIBLE'),
+    onField: getCollaborator(initialValues?.collaborators, 'ON_FIELD'),
+    assistant: getCollaborator(initialValues?.collaborators, 'ASSISTANT'),
+  } : {}
 
   const genericClassName =
     "block borde px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none w-full ease-linear transition-all duration-150";
