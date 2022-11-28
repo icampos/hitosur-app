@@ -5,9 +5,10 @@ interface TaskStatusProps {
   status: string;
   title?: string;
   editable?: boolean; 
+  onTaskChange?: any
 }
 
-export const TaskStatus: React.FC<TaskStatusProps> = ({ status, title, editable=false }) => {
+export const TaskStatus: React.FC<TaskStatusProps> = ({ status, title, editable=false, onTaskChange }) => {
   const statusColors = {
     pending: "text-orange-500",
     done: "text-emerald-500",
@@ -27,18 +28,29 @@ export const TaskStatus: React.FC<TaskStatusProps> = ({ status, title, editable=
 
   const [isEditMode, setIsEditMode] = useState(false)
 
+  const onStatusChange =  (key, value) => {
+      setIsEditMode(false)
+      onTaskChange(title, value)
+  }
+
   return (
-    <>
-    <div onClick={()=>setIsEditMode(true)} onBlur={()=>setIsEditMode(false)} className="status cursor-pointer flex justify-between align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-base mb-4">
+    <div className="flex items-center mb-4 justify-between">
+    <div onClick={()=>setIsEditMode(true)} onBlur={()=>setIsEditMode(false)} className="status cursor-pointer flex justify-between align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-base mr-4">
       <div>
         <i className={`mr-2 ${statusColor} ${statusIcon}`}></i>{" "}
         <span className="capitalize ml-3">{title ? title : status}</span>
       </div>
-      <div>{title && <i className="fas fa-edit hidden" />}</div>
+      {/*<div>{title && <i className="fas fa-edit hidden" />}</div>*/}
     </div>
     {editable && isEditMode && (
-      <StatusSelect />
+      <div className="w-full lg:w-6/12 flex items-center">
+      <StatusSelect onChange={onStatusChange} title={title}/>
+      <div onClick={()=>setIsEditMode(false)}>{<i className="text-lg ml-2 fa-solid fa-square-xmark" />}</div>
+      </div>
     )}
-    </>
+    </div>
   );
 };
+
+
+

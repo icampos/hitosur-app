@@ -5,8 +5,10 @@ import { ProjectCollaborators } from "components/DataDisplay/ProjectCollaborator
 import { ProjectNotes } from "components/DataDisplay/ProjectNotes";
 import { ProjectContext } from "context/ProjectContext";
 import { ProjectQuery } from "queries/projects";
+import { UpdateProjectStatusMutation } from "mutations/project";
+
 import { ProjectForm } from "components/Forms/ProjectForm";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { Button, Tabs } from "antd";
 import dayjs from "dayjs";
@@ -24,6 +26,16 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
     variables: { id: id },
   });
 
+  const [
+    updateStatus,
+    { loading: loadingUpdateStatus, error: errorUpdateStatus },
+  ] = useMutation(UpdateProjectStatusMutation, {
+    onCompleted: () => {
+      refetch()
+    },
+  });
+
+
   const [tasks, setTasks] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -34,8 +46,21 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
     }
   }, [data]);
 
+  const updateTaskArray = (key, value) => {
+    const newProjects = tasks.map(task =>
+      task.title === key
+        ? { ...task, status: value }
+        : task
+    );
+
+    const variables = {id: data?.project.id, task: JSON.stringify(newProjects) }
+
+    updateStatus({variables})
+  }
+
   if (loading) return null;
   if (error) return `Error! ${error}`;
+  
 
   return (
     <ProjectContext.Provider value={data.project}>
@@ -90,9 +115,9 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
             )}
 
             <hr />
-            <div className="text-sm py-6">
+            <div className="text-sm py-6 px-4">
               {tasks.map((task) => (
-                <TaskStatus status={task.status} title={task.title} editable={true}/>
+                <TaskStatus status={task.status} title={task.title} editable={true} onTaskChange={updateTaskArray}/>
               ))}
             </div>
 

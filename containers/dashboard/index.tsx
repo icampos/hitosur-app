@@ -233,6 +233,7 @@ export default function Dashboard() {
           visible={isDrawerVisible}
           key={"placement"}
           width={"700px"}
+          destroyOnClose={true}
         >
           <ProjectDetails project={selectedProject} />
         </Drawer>

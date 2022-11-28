@@ -49,6 +49,7 @@ type Mutation {
   createProject(address: String!, assistant: String, customer: String!, endDate: String, name: String!, note: String, onField: String, responsible: String!, startDate: String!, task: String!, typeId: String!): Project!
   createReminder(assignee: String!, date: String!, description: String!, status: String!, title: String!): Reminder!
   deleteNote(id: String!): Note!
+  updateStatus(id: String!, task: String!): Project!
 }
 
 type Note {

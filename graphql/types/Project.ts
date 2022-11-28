@@ -200,10 +200,10 @@ export const CreateProjectrMutation = extendType({
 })
 
 
-export const UpdateProjectMutation = extendType({
+export const UpdateProjectTaskMutation = extendType({
   type: 'Mutation',
   definition(t) {
-    t.nonNull.field('updateProjectStatus', {
+    t.nonNull.field('updateStatus', {
       type: Project,
       args: {
         id: nonNull(stringArg()),
