@@ -176,14 +176,12 @@ import { getSession } from "@auth0/nextjs-auth0";
 
 import {default as DashboardContainer} from 'containers/dashboard'
 import SubAdmin from "layouts/SubAdmin";
-import {ConfirmModal} from 'components/Modals/ConfirmModal'
 
 export default function Dashboard() {
 
   return (
     <>
      <DashboardContainer />
-     <ConfirmModal isOpen={true} content="Modal Test"/>
     </>
   );
 }

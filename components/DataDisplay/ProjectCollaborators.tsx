@@ -38,8 +38,8 @@ export const ProjectCollaborators = ({
 const InlineProjectCollaborators = (props) => {
   return (
     <div className={`flex items-center`}>
-      {props.collaborators.map((collaborator) => (
-        <>
+      {props.collaborators.map((collaborator, index) => (
+        <div key={index}>
           <Tooltip
             key={collaborator.id}
             placement="topLeft"
@@ -51,7 +51,7 @@ const InlineProjectCollaborators = (props) => {
               className="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow -ml-4 mr-2"
             />
           </Tooltip>
-        </>
+        </div>
       ))}
     </div>
   );
@@ -69,6 +69,7 @@ const ColumnProjectCollaborators = (props) => {
             : "fa-users-gear";
         return (
           <ProjectField
+            key={collaborator.id}
             Icon={<i className={`fas ${icon}`} />}
             field={`${collaborator.name} ${collaborator.lastName}`}
           />

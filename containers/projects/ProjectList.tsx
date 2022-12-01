@@ -206,7 +206,6 @@ export default function ProjectList() {
         closable={true}
         onClose={() => setSelectedRow(null)}
         visible={selectedRow}
-        key={"placement"}
         destroyOnClose={true}
         width={"700px"}
       >

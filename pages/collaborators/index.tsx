@@ -1,39 +1,34 @@
 import React from "react";
-import { gql, useQuery } from "@apollo/client";
+import { getSession } from "@auth0/nextjs-auth0";
 
-// components
-//import {Table} from "components/Cards/Table";
+import CollaboratorList from 'containers/collaborators/index'
+import SubAdmin from "layouts/SubAdmin";
 
-// layout for page
-import Admin from "layouts/Admin.js";
-
-const AllCollaboratorsQuery = gql`
-  query {
-    collaborator {
-      id
-      name
-      lastName
-    }
-  }
-`;
 
 export default function Collaborators() {
-  const { data, loading, error } = useQuery(AllCollaboratorsQuery);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Oh no... {error.message}</p>;
-
-  const columns = [{title: "Name"} , { title: "Last Name" }];
 
   return (
     <>
-      <div className="flex flex-wrap mt-4">
-        <div className="w-full mb-12 px-4">
-          {/*<Table columns={columns} color="dark"  title="Colaboradores"  />*/}
-        </div>
-      </div>
+     <CollaboratorList />
     </>
   );
 }
 
-Collaborators.layout = Admin;
+Collaborators.layout = SubAdmin;
+
+export const getServerSideProps = async ({ req, res }) => {
+    const session = getSession(req, res);
+    if (!session) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/api/auth/login",
+        },
+        props: {},
+      };
+    }
+  
+    return {
+      props: {},
+    };
+  };

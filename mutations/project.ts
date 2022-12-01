@@ -13,8 +13,9 @@ mutation ($name: String!, $startDate: String!, $endDate: String, $address: Strin
 `;
 
 export const UpdateProjectMutation = gql`
-mutation ($id: String!, $status: String!) {
-  updateProjectStatus(id: $id, status: $status) {
+mutation ($id: String!, $name: String!, $startDate: String!, $endDate: String, $address: String!, $typeId: String!, $responsible: String!, $onField: String, $customer: String!, $assistant: String) {
+  updateProject(id: $id, name: $name, startDate: $startDate, endDate: $endDate, address: $address, typeId: $typeId, responsible: $responsible, onField: $onField, customer: $customer, assistant: $assistant) {
+    id
     name
     startDate
     endDate
@@ -23,6 +24,7 @@ mutation ($id: String!, $status: String!) {
   }
 }
 `;
+
 
 
 export const UpdateProjectStatusMutation = gql`

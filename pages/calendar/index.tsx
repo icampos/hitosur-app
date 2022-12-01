@@ -151,7 +151,6 @@ export default function Dashboard() {
           closable={true}
           onClose={() => setIsDrawerVisible(false)}
           visible={isDrawerVisible}
-          key={"placement"}
         >
           <ProjectDetails project={selectedProject} />
         </Drawer>

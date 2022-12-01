@@ -3,11 +3,14 @@
 
 
 type Collaborator {
+  address: String
   avatar: String
   collaboratorType: CollaboratorType
+  email: String
   id: String
   lastName: String
   name: String
+  phone: String
   projects: [Project]
   typeId: String
 }
@@ -45,10 +48,12 @@ type Document {
 
 type Mutation {
   createClient(address: String!, email: String!, lastName: String!, name: String!, phone: String!): Customer!
+  createCollaborator(address: String!, email: String!, lastName: String!, name: String!, phone: String!): Collaborator!
   createNote(date: String!, note: String!, projectId: String!): Note!
   createProject(address: String!, assistant: String, customer: String!, endDate: String, name: String!, note: String, onField: String, responsible: String!, startDate: String!, task: String!, typeId: String!): Project!
   createReminder(assignee: String!, date: String!, description: String!, status: String!, title: String!): Reminder!
   deleteNote(id: String!): Note!
+  updateProject(address: String!, assistant: String, customer: String!, endDate: String, id: String!, name: String!, onField: String, responsible: String!, startDate: String!, typeId: String!): Project!
   updateStatus(id: String!, task: String!): Project!
 }
 

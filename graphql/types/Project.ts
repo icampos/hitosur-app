@@ -199,6 +199,62 @@ export const CreateProjectrMutation = extendType({
   },
 })
 
+export const UpdateProjectMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('updateProject', {
+      type: Project,
+      args: {
+        id: nonNull(stringArg()),
+        name: nonNull(stringArg()),
+        startDate: nonNull(stringArg()),
+        endDate: stringArg(),
+        address: nonNull(stringArg()),
+        typeId: nonNull(stringArg()),
+        responsible: nonNull(stringArg()),
+        onField: stringArg(),
+        customer: nonNull(stringArg()),
+        assistant: stringArg(),
+      },
+      async resolve(_parent, args, ctx) {
+
+        if (!ctx.user) {
+          throw new Error(`You need to be logged in to perform an action`)
+        }
+
+        const newProject = {
+          name: args.name,
+          startDate: args.startDate,
+          endDate: args.endDate,
+          address: args.address,
+          type: {
+            connect: {
+              type: args.typeId
+            }
+          },
+          collaborators: {
+            connect:
+              [{ id: args.responsible }, { id: args.onField }, {id: args.assistant}]
+          },
+          customer: {
+            connect: {
+              id: args.customer
+            }
+          },
+        }
+
+        return await ctx.prisma.project.update({
+          where: {
+            id: args.id,
+          },
+          //@ts-ignore
+          data: newProject,
+        })
+      },
+    })
+  },
+})
+
 
 export const UpdateProjectTaskMutation = extendType({
   type: 'Mutation',

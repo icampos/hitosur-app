@@ -90,6 +90,9 @@ model Collaborator {
   user      User? @relation(fields: [userId], references: [id])
   userId    String?  @unique // relation scalar field (used in the `@relation` attribute above)
   reminders Reminder[]
+  phone     String?
+  email     String?
+  address   String?
 }
 
 model Document {

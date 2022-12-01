@@ -27,9 +27,9 @@ export const WeeklyAgenda = ({ projects, onProjectClick }: WeeklyAgendaProps) =>
 
   return (
     <>
-      {Object.keys(weeklyProjects).map((day) => {
+      {Object.keys(weeklyProjects).map((day, index) => {
         return (
-          <>
+          <div key={index}>
             <div className="mb-2 first-of-type:mt-0">
               <h3 className="text-blueGray-700 mb-4 text-lg">
                 {dayjs(day).format("ddd, DD MMMM")}
@@ -44,7 +44,7 @@ export const WeeklyAgenda = ({ projects, onProjectClick }: WeeklyAgendaProps) =>
               ))}
             </div>
             <hr className="mb-6 mt-6"/>
-          </>
+          </div>
         );
       })}
     </>

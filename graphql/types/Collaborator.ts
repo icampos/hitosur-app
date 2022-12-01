@@ -1,5 +1,5 @@
 // /graphql/types/User.ts
-import { extendType, objectType } from 'nexus'
+import { extendType, nonNull, objectType, stringArg } from 'nexus'
 import { Project } from './Project'
 import { CollaboratorType } from './CollaboratorType'
 
@@ -10,6 +10,9 @@ export const Collaborator = objectType({
     t.string('name')
     t.string('lastName')
     t.string('avatar')
+    t.string('phone')
+    t.string('email')
+    t.string('address')
     t.string('typeId')
     t.list.field('projects', {
         type: Project,
@@ -38,6 +41,7 @@ export const Collaborator = objectType({
   },
 })
 
+
 export const CollaboratorsQuery = extendType({
   type: 'Query',
   definition(t) {
@@ -49,3 +53,39 @@ export const CollaboratorsQuery = extendType({
     })
   },
 })
+
+export const CreateCollaboratorMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('createCollaborator', {
+      type: Collaborator,
+      args: {
+        name: nonNull(stringArg()),
+        lastName: nonNull(stringArg()),
+        phone: nonNull(stringArg()),
+        email: nonNull(stringArg()),
+        address: nonNull(stringArg()),
+      },
+      async resolve(_parent, args, ctx) {
+
+        if (!ctx.user) {
+          throw new Error(`You need to be logged in to perform an action`)
+        }
+
+        const newCollaborator = {
+          name: args.name,
+          lastName: args.lastName,
+          phone: args.phone,
+          email: args.email,
+          address: args.address,
+        }
+
+        return await ctx.prisma.collaborator.create({
+          //@ts-ignore
+          data: newCollaborator,
+        })
+      },
+    })
+  },
+})
+

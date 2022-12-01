@@ -5,7 +5,7 @@ import { ProjectCollaborators } from "components/DataDisplay/ProjectCollaborator
 import { ProjectNotes } from "components/DataDisplay/ProjectNotes";
 import { ProjectContext } from "context/ProjectContext";
 import { ProjectQuery } from "queries/projects";
-import { UpdateProjectStatusMutation } from "mutations/project";
+import { UpdateProjectStatusMutation, UpdateProjectMutation } from "mutations/project";
 
 import { ProjectForm } from "components/Forms/ProjectForm";
 import { useQuery, useMutation } from "@apollo/client";
@@ -31,10 +31,18 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
     { loading: loadingUpdateStatus, error: errorUpdateStatus },
   ] = useMutation(UpdateProjectStatusMutation, {
     onCompleted: () => {
-      refetch()
+      refetch();
     },
   });
 
+  const [
+    updateProject,
+    { loading: loadingUpdateProject, error: errorUpdateProject },
+  ] = useMutation(UpdateProjectMutation, {
+    onCompleted: () => {
+      refetch();
+    },
+  });
 
   const [tasks, setTasks] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -47,20 +55,57 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
   }, [data]);
 
   const updateTaskArray = (key, value) => {
-    const newProjects = tasks.map(task =>
-      task.title === key
-        ? { ...task, status: value }
-        : task
+    const newProjects = tasks.map((task) =>
+      task.title === key ? { ...task, status: value } : task
     );
 
-    const variables = {id: data?.project.id, task: JSON.stringify(newProjects) }
+    const variables = {
+      id: data?.project.id,
+      task: JSON.stringify(newProjects),
+    };
 
-    updateStatus({variables})
-  }
+    updateStatus({ variables });
+  };
+
+  const onFinish = async (data) => {
+    const {
+      name,
+      startDate,
+      endDate,
+      address,
+      typeId,
+      responsible,
+      customer,
+      onField,
+      assistant,
+    } = data;
+    const formattedStartDate = dayjs(startDate).format();
+    const formattedEndDate = endDate ? dayjs(startDate).format() : null;
+
+
+    const variables = {
+      id: id,
+      name,
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+      address,
+      typeId,
+      responsible,
+      onField,
+      customer,
+      assistant,
+    };
+    try {
+      updateProject({ variables });
+      setTimeout(setIsEditMode(false), 30
+)
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   if (loading) return null;
   if (error) return `Error! ${error}`;
-  
 
   return (
     <ProjectContext.Provider value={data.project}>
@@ -68,14 +113,25 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
         <Tabs
           defaultActiveKey="1"
           tabBarExtraContent={
-            <Button
-              className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 height-xs"
-              type="primary"
-              onClick={() => setIsEditMode(true)}
-              icon={<i className="fa fa-edit mr-2" />}
-            >
-              Edit Event
-            </Button>
+            isEditMode ? (
+              <Button
+                className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 height-xs"
+                type="primary"
+                onClick={() => setIsEditMode(false)}
+                icon={<i className="fa fa-close mr-2" />}
+              >
+                Cancel Edit
+              </Button>
+            ) : (
+              <Button
+                className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 height-xs"
+                type="primary"
+                onClick={() => setIsEditMode(true)}
+                icon={<i className="fa fa-edit mr-2" />}
+              >
+                Edit Event
+              </Button>
+            )
           }
         >
           <TabPane
@@ -104,20 +160,31 @@ export const ProjectDetails = ({ project }: ProjectSummaryProps) => {
                   Icon={<i className="fas fa-mobile" />}
                   field={data.project.customer.phone}
                 />
-                
+
                 <ProjectCollaborators
                   direction="flex-col"
                   collaborators={data.project.collaborators}
                 />
               </div>
             ) : (
-              <ProjectForm isUpdate={true} onFinish={()=>{console.log('test')} } isLoading={false} initialValues={data.project}/>
+              <ProjectForm
+                isUpdate={true}
+                onFinish={onFinish}
+                isLoading={loadingUpdateProject}
+                initialValues={data.project}
+              />
             )}
 
             <hr />
             <div className="text-sm py-6 px-4">
-              {tasks.map((task) => (
-                <TaskStatus status={task.status} title={task.title} editable={true} onTaskChange={updateTaskArray}/>
+              {tasks.map((task, index) => (
+                <TaskStatus
+                  key={index}
+                  status={task.status}
+                  title={task.title}
+                  editable={true}
+                  onTaskChange={updateTaskArray}
+                />
               ))}
             </div>
 

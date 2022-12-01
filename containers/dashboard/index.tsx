@@ -167,14 +167,14 @@ export default function Dashboard() {
                   {!loading &&
                     dailyAgenda &&
                     dailyAgenda.map((project) => (
-                      <>
+                      <div key={project.id}>
                         <ProjectSummary
                           key={project.id}
                           project={project}
                           color="light"
                           onClick={() => onProjectClick(project)}
                         />
-                      </>
+                      </div>
                     ))}
                   {(!dailyAgenda || dailyAgenda.length <= 0) && (
                     <Empty
@@ -231,7 +231,6 @@ export default function Dashboard() {
           closable={true}
           onClose={() => setIsDrawerVisible(false)}
           visible={isDrawerVisible}
-          key={"placement"}
           width={"700px"}
           destroyOnClose={true}
         >
@@ -248,7 +247,6 @@ export default function Dashboard() {
           closable={true}
           onClose={() => setIsAddDrawerVisible(false)}
           visible={isAddDrawerVisible}
-          key={"placement"}
           width={"700px"}
         >
           <ProjectForm onFinish={onFinish} isLoading={loadingAddProject} />
@@ -264,7 +262,6 @@ export default function Dashboard() {
           closable={true}
           onClose={() => setIsAddReminderVisible(false)}
           visible={isAddReminderVisible}
-          key={"placement"}
           width={"700px"}
         >
           <ReminderForm onFinish={onFinishAddReminder} isLoading={loadingAddReminder} />

@@ -34,7 +34,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
     typeId: initialValues.projectType.type,
     address:initialValues.address,
     startDate: moment(initialValues.startDate),
-    endDate: moment(initialValues.endDate),
+    endDate: initialValues.endDate ? moment(initialValues.endDate) : null,
     customer: initialValues.customer.id,
     responsible: getCollaborator(initialValues?.collaborators, 'RESPONSIBLE'),
     onField: getCollaborator(initialValues?.collaborators, 'ON_FIELD'),
@@ -205,7 +205,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
                 type="primary"
                 className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 float-right"
               >
-                Create Event
+                {isUpdate? 'Update Event' : 'Create Event' } 
               </Button>
             </div>
           </div>

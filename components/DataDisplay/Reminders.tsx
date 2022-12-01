@@ -26,9 +26,9 @@ export default function Reminders({ reminders, onCreateReminder }: RemidersProps
 
         </div>
         <div className="flex-auto px-4 lg:px-8 pb-6 bg-white">
-          {reminders?.map((reminder) => {
+          {reminders?.map((reminder, key) => {
             return (
-              <>
+              <div key={key}>
               <CardReminder
                 date={reminder.date}
                 title={reminder.title}
@@ -37,7 +37,7 @@ export default function Reminders({ reminders, onCreateReminder }: RemidersProps
                 assignee={reminder.assignee}
               />
               <hr />
-              </>
+              </div>
             );
           })}
         </div>
